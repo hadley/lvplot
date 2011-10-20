@@ -15,7 +15,7 @@ determineDepth <- function(n, k, alpha,  perc) {
   	# confidence intervals around an LV statistic 
   	# should not extend into surrounding LV statistics
 
-  	k <- ceiling((log2(n))-log2(4*qnorm(alpha+(1-alpha)/2)^2))  
+  	k <- ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2))  
   }
   if (k < 1) k <- 1	
  
