@@ -1,0 +1,11 @@
+Package: lvplot
+Type: Package
+Title: Level value plots for R
+Version: 0.1
+Date: 2006-09-16
+Author: Heike Hofmann <hofmann@iastate.edu>
+Maintainer: Hadley Wickham <hadley@iastate.edu>
+Description: This package implements letter value boxplots which extend the standard boxplot to deal with larger data.
+Depends: RColorBrewer
+License: MIT
+Packaged: Sat Sep 16 17:33:14 2006; hadley
