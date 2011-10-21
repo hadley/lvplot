@@ -10,7 +10,7 @@ determine2dDepth <- function(n,k,alpha,perc) {
 
 LVbagplot <- function(x, ...) UseMethod("LVbagplot",x)
 
-LVbagplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL,horizontal=T,col="grey", method="depth", ...) {
+LVbagplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, method="convex", horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", ...) {
     deparen <- function(expr) {
         while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) == 
             "(") expr <- expr[[2]]
@@ -38,7 +38,7 @@ LVbagplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL,horizontal=T
 }
 
 
-LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey", method="depth", ...) {
+LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", method="convex", horizontal=TRUE, xlab=NULL, ylab=NULL, bg="grey95", ...) {
     win <- function(dx, dy) {
         atan2(y = dy, x = dx)
     }
@@ -54,65 +54,71 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey", me
   src.col <- col 
 
   if (! is.na(src.col)) { 
-	   		colrgb <- col2rgb(src.col)
-	   		colhsv <- rgb2hsv(colrgb)
-			if (colhsv[2,1] == 0) {
-	   			val <- seq(0.9,colhsv[3,1], length.out=k)
-	   			colrgb <- col2rgb(hsv(colhsv[1,1], colhsv[2,1], val))
-			} else {
-	   			sat <- seq(0.1,colhsv[2,1], length.out=k)
-	   			colrgb <- col2rgb(hsv(colhsv[1,1], sat, colhsv[3,1]))
-			}
-	   		col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255)
-	   		col <- rev(col)	
+    colrgb <- col2rgb(src.col)
+    colhsv <- rgb2hsv(colrgb)
+    if (colhsv[2,1] == 0) {
+      val <- seq(0.9,colhsv[3,1], length.out=k)
+      colrgb <- col2rgb(hsv(colhsv[1,1], colhsv[2,1], val))
+    } else {
+      sat <- seq(0.1,colhsv[2,1], length.out=k)
+      colrgb <- col2rgb(hsv(colhsv[1,1], sat, colhsv[3,1]))
+    }
+    col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255)
+    col <- rev(col)	
   }
   else { col <- rep("grey",k) }
 
   xy <- cbind(x,y)
 
-if (method=="mine") {
-# compute halfspace depth
-  i <- 1
-
-  m <- nrow(xy)
-  res <- numeric(0)
-
-  while ((!is.null(m)) && (m > 0)) {
-    pts <- chull(xy)
-    res <- rbind(res, cbind(xy[pts,], rep(i,length(pts))))
-    xy <- xy[-pts,]
-    m <- dim(xy)[1]
-    i <- i+1
-  }
-} 
-if (method=="apl") {
-
-}
-if (method=="depth") {
-	require(depth)
-	dep <- vector(length=nrow(xy))
-	for (i in 1:nrow(xy))
-		dep[i] <- depth(xy[i,],xy)
-	res <- cbind(xy,round(dep*nrow(xy)))
-}
-# compute median as average of points with maximal halfspace depth
-	med <- res[which(res[,3]==max(res[,3])),]
-	medx <- mean(med[,1])
-	medy <- mean(med[,2])
-
-# draw LV polygons
-	plot(x,y, type="n")
-	for (i in k:1) {
-		dd <- 2^i
-		Q <- res[n/dd,3]
-		tp <- res[which(res[,3]==Q),1:2]
-		angle <- win(tp[,1]-medx, tp[,2]-medy)
-		ord <- order(angle)
-		polygon(tp[ord,], col=col[i], density=-1)
+	if (method=="convex") {
+	# compute halfspace depth
+	  i <- 1
+	
+	  m <- nrow(xy)
+	  res <- numeric(0)
+	
+	  while ((!is.null(m)) && (m > 0)) {
+	    pts <- chull(xy)
+	    res <- rbind(res, cbind(xy[pts,], rep(i,length(pts))))
+	    xy <- xy[-pts,]
+	    m <- dim(xy)[1]
+	    i <- i+1
+	  }
+	} 
+	if (method=="apl") {
+	
 	}
-	points(medx, medy, pch=20)
-	Qmin <- res[n/2^k,3]
+	if (method=="depth") {
+		require(depth)
+		dep <- vector(length=nrow(xy))
+		for (i in 1:nrow(xy))
+			dep[i] <- depth(xy[i,],xy)
+		res <- cbind(xy,round(dep*nrow(xy)))
+	}
+	# compute median as average of points with maximal halfspace depth
+		med <- res[which(res[,3]==max(res[,3])),]
+		medx <- mean(med[,1])
+		medy <- mean(med[,2])
+	
+	# draw LV polygons
+		plot(x,y, type="n")
+	    rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = bg)
+	    box()
+	    axis(1)
+	    axis(2)	  
+	    grid(lty=1, col="white")
 
-	points(res[which(res[,3]>=Qmin),1:2], pch=".")
-	points(res[which(res[,3]<Qmin),1:2], ...)
-}
+		for (i in k:1) {
+			dd <- 2^i
+			Q <- res[n/dd,3]
+			tp <- res[which(res[,3]==Q),1:2]
+			angle <- win(tp[,1]-medx, tp[,2]-medy)
+			ord <- order(angle)
+			polygon(tp[ord,], col=col[i], density=-1)
+		}
+		points(medx, medy, pch=20)
+		Qmin <- res[n/2^k,3]
+	
+		points(res[which(res[,3]>=Qmin),1:2], pch=".")
+		points(res[which(res[,3]<Qmin),1:2], ...)
+	}

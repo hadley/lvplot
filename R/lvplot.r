@@ -209,7 +209,7 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
 	  if (is.null(xlab)) xlab=x.name
 	  if (is.null(ylab)) ylab=""
 	  
-    plot(x,rep(pt,length(x)),ylim=c(pt-0.5,pt+0.5),ylab=ylab,xlab=xlab,axes=FALSE,type="n",bg="grey80",...)
+    plot(x,rep(pt,length(x)),ylim=c(pt-0.5,pt+0.5),ylab=ylab,xlab=xlab,axes=FALSE,type="n",...)
 	  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = bg)
 	  box()
 	  grid(lty=1, col="white", ny=NA)
@@ -218,7 +218,7 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
   } else {
 	  if (is.null(ylab)) ylab=x.name
  	  if (is.null(xlab)) xlab=""
-    plot(rep(pt,length(x)),x,xlim=c(pt-0.5,pt+0.5), ylab=ylab,xlab=xlab, axes=FALSE, type="n",bg="grey80", ...)
+    plot(rep(pt,length(x)),x,xlim=c(pt-0.5,pt+0.5), ylab=ylab,xlab=xlab, axes=FALSE, type="n", ...)
 	  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = bg)
 	  box()
 	  grid(lty=1, col="white", ny=NA)
