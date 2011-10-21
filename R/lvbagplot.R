@@ -2,7 +2,7 @@ determine2dDepth <- function(n,k,alpha,perc) {
 # by default, subtracts 3 levels from one dimensional solution
 # --- no mathematical foundation for doing this so far
 
-	k <- determineDepth(n,k,alpha,perc)-3	
+	k <- determineDepth(n,k,alpha,perc)-4	
     if (k < 1) 
         k <- 1
     return(k)
@@ -34,7 +34,7 @@ LVbagplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, method="con
     x.name <- deparse(x)
     x <- eval(x,  parent.frame())
 
-	LVbagplot.numeric(x,z, alpha, k, perc, col, method, ...)
+	LVbagplot.numeric(x,z, alpha, k, perc, col, method, xlab=x.name, ylab=z.name, ...)
 }
 
 
@@ -46,6 +46,9 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
   if (missing(y)) {
   	print("don't have y")
   }
+  args <- as.list(match.call())[-1]
+  x.name <- args$x
+  y.name <- args$y
 	
   n <- length(x)
   if (length(y) != n) stop("x and y do not have the same length")
@@ -101,7 +104,9 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
 		medy <- mean(med[,2])
 	
 	# draw LV polygons
-		plot(x,y, type="n")
+		if(is.null(xlab)) xlab=x.name
+		if(is.null(ylab)) ylab=y.name
+		plot(x,y, type="n", xlab=xlab, ylab=ylab)
 	    rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = bg)
 	    box()
 	    axis(1)
