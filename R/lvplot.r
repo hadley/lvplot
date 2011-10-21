@@ -166,25 +166,26 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
 LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", ...) {
 # extension of standard boxplots
 # draws k letter statistics
+  x.name <- as.list(match.call())[-1]$x
+  x <- eval(x,  parent.frame())
 
   n <- length(x)
   k <- determineDepth(n,k,alpha,perc) 
   src.col <- col 
 
-  if (! is.na(src.col)) { #col <- c(brewer.pal(k-1,"Blues"),"Black") 
- 	   		
-	   		colrgb <- col2rgb(src.col)
-	   		colhsv <- rgb2hsv(colrgb)
-			if (colhsv[2,1] == 0) {
-	   			val <- seq(0.9,colhsv[3,1], length.out=k)
-	   			colrgb <- col2rgb(hsv(colhsv[1,1], colhsv[2,1], val))
-			} else {
-	   			sat <- seq(0.1,colhsv[2,1], length.out=k)
-	   			colrgb <- col2rgb(hsv(colhsv[1,1], sat, colhsv[3,1]))
-			}
-	   		col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255) 	
-  }
-  else { col <- rep("grey",k) }
+  if (! is.na(src.col)) { 
+    #col <- c(brewer.pal(k-1,"Blues"),"Black")  		
+    colrgb <- col2rgb(src.col)
+    colhsv <- rgb2hsv(colrgb)
+    if (colhsv[2,1] == 0) {
+      val <- seq(0.9,colhsv[3,1], length.out=k)
+      colrgb <- col2rgb(hsv(colhsv[1,1], colhsv[2,1], val))
+    } else {
+      sat <- seq(0.1,colhsv[2,1], length.out=k)
+      colrgb <- col2rgb(hsv(colhsv[1,1], sat, colhsv[3,1]))
+    }
+    col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255) 	
+  }  else { col <- rep("grey",k) }
   
 # compute letter values based on depth  
   depth    <- rep(0,k)
@@ -205,13 +206,24 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
 
   pt <- 0.5
   if (horizontal) {
-    plot(x,rep(pt,length(x)),ylim=c(pt-0.5,pt+0.5),ylab="",axes=FALSE,type="n",bg="grey80",...)
-	box()
-	axis(1)
+	  if (is.null(xlab)) xlab=x.name
+	  if (is.null(ylab)) ylab=""
+	  
+    plot(x,rep(pt,length(x)),ylim=c(pt-0.5,pt+0.5),ylab=ylab,xlab=xlab,axes=FALSE,type="n",bg="grey80",...)
+	  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = bg)
+	  box()
+	  grid(lty=1, col="white", ny=NA)
+	  abline(h=pt, col="white")
+  	axis(1)
   } else {
-	plot(rep(pt,length(x)),x,xlim=c(pt-0.5,pt+0.5), xlab="", axes=FALSE, type="n",bg="grey80", ...)
-	box()
-	axis(2)
+	  if (is.null(ylab)) ylab=x.name
+ 	  if (is.null(xlab)) xlab=""
+    plot(rep(pt,length(x)),x,xlim=c(pt-0.5,pt+0.5), ylab=ylab,xlab=xlab, axes=FALSE, type="n",bg="grey80", ...)
+	  rect(par("usr")[1], par("usr")[3], par("usr")[2], par("usr")[4], col = bg)
+	  box()
+	  grid(lty=1, col="white", ny=NA)
+	  abline(v=pt, col="white")
+    axis(2)
   }
      
   drawLVplot(x,pt,k,out,qu,horizontal,col,...)
