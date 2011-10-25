@@ -125,9 +125,9 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
 # compute one set of colours for the rectangles
 	xtable <- table(x, useNA="ifany")
 	kmax <- determineDepth(max(xtable),src.k,alpha,perc)
-    if (! is.na(src.col)) { 
-   		col <- color_scale(src.col, kmax)	
-   	 } else { col <- rep("grey",kmax) }
+    if (length(src.col)==1) col <- color_scale(src.col, kmax)	
+   	if ((length(src.col)==0)) col <- rep("grey",kmax) 
+#   	if (length(src.col > 1)) col <- src.col
 	
 	result <- list(length(setx))
     for (i in setx) {
@@ -178,10 +178,9 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
   n <- length(x)
   k <- determineDepth(n,k,alpha,perc) 
   src.col <- col 
-
-   if (! is.na(src.col)) { 
-	 col <- color_scale(src.col, k)
-   } else { col <- rep("grey",k) }
+  if (length(src.col)==1) col <- color_scale(src.col, k)	
+  if (length(src.col)==0) col <- rep("grey",k) 
+#  if (length(src.col > 1)) col <- src.col
   
 # compute letter values based on depth  
   depth    <- rep(0,k)
