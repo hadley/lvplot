@@ -56,10 +56,8 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
   k <- determine2dDepth(n,k,alpha,perc) 
   src.col <- col 
 
-  if (! is.na(src.col)) { 
-	col <- rev(color_scale(src.col, k))
-  }
-  else { col <- rep("grey",k) }
+  if (length(src.col)==1) col <- color_scale(src.col, kmax)	
+  if ((length(src.col)==0)) col <- rep("grey",kmax) 
 
   xy <- cbind(x,y)
 
