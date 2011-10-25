@@ -57,17 +57,7 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
   src.col <- col 
 
   if (! is.na(src.col)) { 
-    colrgb <- col2rgb(src.col)
-    colhsv <- rgb2hsv(colrgb)
-    if (colhsv[2,1] == 0) {
-      val <- seq(0.9,colhsv[3,1], length.out=k)
-      colrgb <- col2rgb(hsv(colhsv[1,1], colhsv[2,1], val))
-    } else {
-      sat <- seq(0.1,colhsv[2,1], length.out=k)
-      colrgb <- col2rgb(hsv(colhsv[1,1], sat, colhsv[3,1]))
-    }
-    col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255)
-    col <- rev(col)	
+	col <- rev(color_scale(src.col, k))
   }
   else { col <- rep("grey",k) }
 
