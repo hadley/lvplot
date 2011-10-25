@@ -1,3 +1,20 @@
+color_scale <- function(src.col, k) {
+# starting colour src.col
+# number of colours
+	colrgb <- col2rgb(src.col)
+	colhsv <- rgb2hsv(colrgb)
+	if (colhsv[1,1] == 0) {
+	  sat <- colhsv[2,1]	
+	} else {
+	  sat <- seq(0.1,colhsv[2,1], length.out=k)
+	}
+	
+	val <- seq(0.9,colhsv[3,1], length.out=k)
+	colrgb <- col2rgb(hsv(colhsv[1,1], sat, val))
+	col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255) 	
+	col
+}
+
 # LV box plot
 # An extension of standard boxplots which draws k letter statistics
 # 
@@ -109,18 +126,7 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
 	xtable <- table(x, useNA="ifany")
 	kmax <- determineDepth(max(xtable),src.k,alpha,perc)
     if (! is.na(src.col)) { 
-   		#col <- c(brewer.pal(k-1,"Blues"),"Black") # break dependency of ColorBrewer package
-   		
-   		colrgb <- col2rgb(src.col)
-   		colhsv <- rgb2hsv(colrgb)
-		if (colhsv[2,1] == 0) {
-   			val <- seq(0.9,colhsv[3,1], length.out=kmax)
-   			colrgb <- col2rgb(hsv(colhsv[1,1], colhsv[2,1], val))
-		} else {
-   			sat <- seq(0.1,colhsv[2,1], length.out=kmax)
-   			colrgb <- col2rgb(hsv(colhsv[1,1], sat, colhsv[3,1]))
-		}
-   		col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255) 	
+   		col <- color_scale(src.col, kmax)	
    	 } else { col <- rep("grey",kmax) }
 	
 	result <- list(length(setx))
@@ -173,19 +179,9 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
   k <- determineDepth(n,k,alpha,perc) 
   src.col <- col 
 
-  if (! is.na(src.col)) { 
-    #col <- c(brewer.pal(k-1,"Blues"),"Black")  		
-    colrgb <- col2rgb(src.col)
-    colhsv <- rgb2hsv(colrgb)
-    if (colhsv[2,1] == 0) {
-      val <- seq(0.9,colhsv[3,1], length.out=k)
-      colrgb <- col2rgb(hsv(colhsv[1,1], colhsv[2,1], val))
-    } else {
-      sat <- seq(0.1,colhsv[2,1], length.out=k)
-      colrgb <- col2rgb(hsv(colhsv[1,1], sat, colhsv[3,1]))
-    }
-    col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255) 	
-  }  else { col <- rep("grey",k) }
+   if (! is.na(src.col)) { 
+	 col <- color_scale(src.col, k)
+   } else { col <- rep("grey",k) }
   
 # compute letter values based on depth  
   depth    <- rep(0,k)
