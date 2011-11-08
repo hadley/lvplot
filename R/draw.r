@@ -7,6 +7,7 @@
 #' @param depth depth of the corresponding LV statistic (i.e. how far from the
 #'    outside do we have to go into the sorted data values?)
 #' @inheritParams determineDepth
+#' @keywords internal
 #' @return
 #'  \item{letter.val}{letter value statistic, distinguishes between upper and
 #'    lower LV statistic for all statistics but the median}
@@ -59,6 +60,7 @@ outputLVplot <- function(x,qu,k,out,depth,alpha) {
 #' @param qu quantiles
 #' @param horizontal display horizontally (TRUE) or vertically (FALSE)
 #' @param col vector of colours to use
+#' @keywords internal
 drawLVplot <- function(x,y,k,out,qu,horizontal,col,...) {
   if (horizontal) { 
 	points(x[out],rep(y,length(x[out])),pch=8)		
