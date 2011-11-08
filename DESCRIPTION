@@ -2,8 +2,18 @@ Package: lvplot
 Type: Package
 Title: Level value plots for R
 Version: 0.1
-Author: Heike Hofmann <hofmann@iastate.edu>, Hadley Wickham <hadley@iastate.edu>
-Maintainer: Hadley Wickham <hadley@iastate.edu>
-Description: This package implements letter value boxplots which extend the standard boxplot to deal with larger data.
-Depends: RColorBrewer
+Author: Heike Hofmann <hofmann@iastate.edu>, Hadley Wickham
+    <h.wickham@gmail.com>
+Maintainer: Hadley Wickham <h.wickham@gmail.com>>
+Description: This package implements the letter value
+    boxplot which extend the standard boxplot to deal with
+    both larger and smaller data by dynamically selecting
+    the appropriate number of letter values to display.
+Depends:
+    RColorBrewer
 License: MIT
+Collate:
+    'calculate.r'
+    'draw.r'
+    'lvbagplot.R'
+    'lvplot.r'

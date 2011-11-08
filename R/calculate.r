@@ -1,11 +1,15 @@
-# Determine depth
-# Determine number of letter values needed for n observations
-# 
-# @arguments number of observation to be shown in the LV boxplot
-# @arguments number of letter value statistics used 
-# @arguments if defined, depth k is calculated such that confidence intervals of an LV statistic do not extend into neighboring LV statistics
-# @arguments if defined, depth k is adjusted such that \code{perc} percent outliers are shown
-# @keyword internal 
+#' Determine depth of letter values needed for n observations.
+#' 
+#' @details Supply one of \code{k}, \code{alpha} or \code{perc}.
+#'
+#' @param n number of observation to be shown in the LV boxplot
+#' @param k number of letter value statistics used 
+#' @param alpha if supplied, depth k is calculated such that confidence
+#'   intervals of width \code{alpha} of an LV statistic do not extend into
+#'   neighboring LV statistics. 
+#' @param perc if supplied, depth k is adjusted such that \code{perc} percent
+#'   outliers are shown 
+#' @export
 determineDepth <- function(n, k, alpha,  perc) {
   if (!is.null(perc)) {
   	# we're aiming for perc percent of outlying points

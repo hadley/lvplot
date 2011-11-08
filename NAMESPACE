@@ -1,0 +1,4 @@
+export(determineDepth)
+export(LVboxplot)
+S3method(LVboxplot,formula)
+S3method(LVboxplot,numeric)

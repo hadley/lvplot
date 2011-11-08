@@ -15,57 +15,67 @@ color_scale <- function(src.col, k) {
 	col
 }
 
-# LV box plot
-# An extension of standard boxplots which draws k letter statistics
-# 
-# This is a generic method so please see specific methods for details.
-#
-# @seealso \code{\link{LVboxplot.formula}}, \code{\link{LVboxplot.numeric}}
-# @keyword internal
+#' LV box plot.
+#'
+#' An extension of standard boxplots which draws k letter statistics.
+#' 
+#' This is a generic method: please see specific methods for details.
+#'
+#' @family letter-value boxplots
+#' @keywords internal
+#' @export
 LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
 
-# Side-by-side LV boxplots
-# An extension of standard boxplots which draws k letter statistics
-# 
-# Conventional boxplots (Tukey 1977) are useful displays for conveying rough information
-# about the central 50\% of the data and the extent of the data.
-# 
-# For moderate-sized data sets ($n < 1000$), detailed estimates of tail behavior beyond
-# the quartiles may not be trustworthy, so the information provided by boxplots is
-# appropriately somewhat vague beyond the quartiles, and the expected number of
-# ``outliers'' and ``far-out'' values for a Gaussian sample of size $n$ is often less
-# than 10 (Hoaglin, Iglewicz, and Tukey 1986). Large data sets ($n \approx
-# 10,000-100,000$) afford more precise estimates of quantiles in the tails beyond the
-# quartiles and also can be expected to present a large number of ``outliers'' (about 0.4
-# + 0.007$n$).
-# 
-# The letter-value box plot addresses both these shortcomings: it conveys more detailed
-# information in the tails using letter values, only out to the depths where the letter
-# values are reliable estimates of their corresponding quantiles (corresponding to tail
-# areas of roughly $2^{-i}$); ``outliers'' are defined as a function of the most extreme
-# letter value shown. All aspects shown on the letter-value boxplot are actual
-# observations, thus remaining faithful to the principles that governed Tukey's original
-# boxplot.
-# 
-# @arguments the formula has to be of the form $y \tilde x$, where $x$ is a qualitative variable. The values of $y$ will be split into groups according to their values on $x$ and separate letter value box plots of $y$ are drawn side by side in the same display.
-# @arguments significance level, if neither \code{k} nor \code{perc} is specified, \code{alpha} is used to determine how many letter values are to be used.
-# @arguments percentage of data points to be shown individually (as outliers) outside the letter-value boxes. \code{perc} is only used, if \code{k} is not specified.  If used, $k$ is determined in such a way, that confidence intervals around each letter value statistics will not include neighboring letter value statistics at a significance level of \code{alpha}.
-# @arguments number of letter statistics to compute and draw
-# @arguments if defined, aim for \code{perc} percent outliers
-# @arguments display horizontally (TRUE) or vertically (FALSE)
-# @arguments specify base colour to use
-# @arguments unused
-# @keyword hplot
-# @seealso \code{\link{LVboxplot.numeric}}
-#X n <- 10
-#X oldpar <- par()
-#X par(mfrow=c(4,2), mar=c(3,3,3,3))
-#X for (i in 1:4) {
-#X 	x <- rexp(n*10^i)
-#X 	boxplot(x,col="grey", horizontal=TRUE)
-#X 	title(paste("Exponential, n=",length(x)))
-#X 	LVboxplot(x,col="grey", xlab="")
-#X }
+#' Side-by-side LV boxplots.
+#'
+#' An extension of standard boxplots which draws k letter statistics. 
+#' Conventional boxplots (Tukey 1977) are useful displays for conveying rough
+#' information about the central 50\% of the data and the extent of the data.
+#' 
+#' For moderate-sized data sets ($n < 1000$), detailed estimates of tail
+#' behavior beyond the quartiles may not be trustworthy, so the information
+#' provided by boxplots is appropriately somewhat vague beyond the quartiles,
+#' and the expected number of ``outliers'' and ``far-out'' values for a
+#' Gaussian sample of size $n$ is often less than 10 (Hoaglin, Iglewicz, and
+#' Tukey 1986). Large data sets ($n \approx 10,000-100,000$) afford more
+#' precise estimates of quantiles in the tails beyond the quartiles and also
+#' can be expected to present a large number of ``outliers'' (about 0.4
+#' + 0.007$n$).
+#' 
+#' The letter-value box plot addresses both these shortcomings: it conveys
+#' more detailed information in the tails using letter values, only out to the
+#' depths where the letter values are reliable estimates of their
+#' corresponding quantiles (corresponding to tail areas of roughly $2^{-i}$);
+#' ``outliers'' are defined as a function of the most extreme letter value
+#' shown. All aspects shown on the letter-value boxplot are actual 
+#' observations, thus remaining faithful to the principles that governed
+#' Tukey's original boxplot.
+#' 
+#' @param formula a plotting formula of the form $y \tilde x$, where $x$ is a
+#'   qualitative variable. The values of $y$ will be split into groups
+#'   according to their values on $x$ and separate letter value box plots of
+#'   $y$ are drawn side by side in the same display.
+#' @param xlab x axis label
+#' @param ylab y axis label
+#' @param bg background colour
+#' @inheritParams determineDepth
+#' @inheritParams drawLVplot
+#' @param ... passed onto \code{\link{plot}}
+#' @export
+#' @method LVboxplot formula
+#' @keywords hplot
+#' @family letter-value boxplots
+#' @examples
+#' n <- 10
+#' oldpar <- par()
+#' par(mfrow=c(4,2), mar=c(3,3,3,3))
+#' for (i in 1:4) {
+#'   x <- rexp(10 ^ (i + 1))
+#'   boxplot(x, col = "grey", horizontal = TRUE)
+#'   title(paste("Exponential, n = ", length(x)))
+#'   LVboxplot(x, col = "grey", xlab = "")
+#' }
+#' par(oldpar)
 LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", ...) {
     deparen <- function(expr) {
         while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) == 
@@ -158,17 +168,15 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
     invisible(as.list(result))
 }
 
-# Single LV boxplot
-# Produces a single lettervalue boxplot for the specified data.
-# 
-# @arguments alpha level for significance level: alpha 100\% confidence intervals do not touch neighboring LV statistics
-# @arguments number of letter statistics to compute and draw
-# @arguments if defined, aim for \code{perc} percent outliers
-# @arguments display horizontally (TRUE) or vertically (FALSE)
-# @arguments specify base colour to use
-# @arguments unused
-# @keyword hplot
-# @seealso \code{\link{LVboxplot.formula}}
+#' Draw a single LV boxplot.
+#' 
+#' @param x numeric vector of data
+#' @inheritParams LVboxplot.formula
+#' @inheritParams determineDepth
+#' @inheritParams drawLVplot
+#' @family letter-value boxplots
+#' @export
+#' @method LVboxplot numeric
 LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", ...) {
 # extension of standard boxplots
 # draws k letter statistics
