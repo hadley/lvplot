@@ -1,13 +1,39 @@
-\docType{function}
 \name{LVboxplot.formula}
 \alias{LVboxplot.formula}
 \title{Side-by-side LV boxplots.}
+\usage{
+  \method{LVboxplot}{formula} (formula, alpha = 0.95,
+    k = NULL, perc = NULL, horizontal = TRUE, xlab = NULL,
+    ylab = NULL, col = "grey30", bg = "grey90", ...)
+}
 \arguments{
   \item{formula}{a plotting formula of the form \code{y ~
   x}, where \code{x} is a string or factor. The values of
   \code{y} will be split into groups according to their
   values on \code{x} and separate letter value box plots of
   \code{y} are drawn side by side in the same display.}
+
+  \item{xlab}{x axis label}
+
+  \item{ylab}{y axis label}
+
+  \item{bg}{background colour}
+
+  \item{...}{passed onto \code{\link{plot}}}
+
+  \item{alpha}{if supplied, depth k is calculated such that
+  confidence intervals of width \code{alpha} of an LV
+  statistic do not extend into neighboring LV statistics.}
+
+  \item{k}{number of letter value statistics used}
+
+  \item{perc}{if supplied, depth k is adjusted such that
+  \code{perc} percent outliers are shown}
+
+  \item{horizontal}{display horizontally (TRUE) or
+  vertically (FALSE)}
+
+  \item{col}{vector of colours to use}
 }
 \description{
   An extension of standard boxplots which draws k letter

@@ -1,7 +1,9 @@
-\docType{function}
 \name{LVboxplot}
 \alias{LVboxplot}
 \title{LV box plot.}
+\usage{
+  LVboxplot(x, ...)
+}
 \description{
   An extension of standard boxplots which draws k letter
   statistics.
