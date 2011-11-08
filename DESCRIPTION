@@ -9,9 +9,9 @@ Description: This package implements the letter value
     boxplot which extend the standard boxplot to deal with
     both larger and smaller data by dynamically selecting
     the appropriate number of letter values to display.
-Depends:
-    RColorBrewer
 License: MIT
+Suggests:
+    depth
 Collate:
     'calculate.r'
     'draw.r'
