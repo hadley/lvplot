@@ -83,7 +83,6 @@ lvtable <- function(x, k, alpha=0.95) {
   # letter value
   qu <- calcLV(x,k)
   
-  browser()
   tab <- matrix(c(c(rev(depth), depth[-1]), qu), ncol = 2,
     dimnames = list(nameLV(k)[[2]], c("depth","LV")))
 
