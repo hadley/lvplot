@@ -75,7 +75,7 @@ determineDepth <- function(n, k, alpha, perc) {
 #' @export
 lvtable <- function(x, k, alpha=0.95) {
   n <- length(x)
-  if (2^k > n) k <- floor(log(n, base=2))
+  if (2^k > n) k <- ceiling(log2(n)) + 1
   
   # depths for letter values 
   depth <- getDepth(k, n)
