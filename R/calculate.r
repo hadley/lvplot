@@ -52,19 +52,26 @@ nameLV <- function(k) {
 #'   outliers are shown 
 #' @export
 determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
-  if (!is.null(perc)) {
+  if (!is.null(k)) {
+    stopifnot(is.numeric(k) && length(k) == 1)
+    k <- as.integer(k)
+  } else if (!is.null(perc)) {
     # we're aiming for perc percent of outlying points
-    k <- ceiling((log2(n))+1) - ceiling((log2(n*perc*0.01))+1)+1
-  }
-  if (is.null(k)) { 
+    stopifnot(is.numeric(perc) && length(perc) == 1)
+
+    k <- ceiling((log2(n))+1) - ceiling((log2(n*perc*0.01))+1) + 1
+  } else if (!is.null(alpha)) { 
     # confidence intervals around an LV statistic 
     # should not extend into surrounding LV statistics
+    stopifnot(is.numeric(alpha) && length(alpha) == 1)
+    stopifnot(alpha > 0 && alpha < 1)
 
     k <- ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2))
+  } else {
+    stop("Must specify one of k, alpha, perc", call. = FALSE)
   }
-  if (k < 1) k <- 1
- 
-  return (k)
+  
+  max(k, 1L)
 }
 
 #' Compute table of k letter values for vector x
