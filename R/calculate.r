@@ -105,10 +105,10 @@ confintLV <- function(x, k, alpha=0.95) {
   extend <- ceiling(0.5 *sqrt(2*depth-1) * qnorm(alpha+(1-alpha)/2))
   low <- depth - extend
   high <- depth + extend
-  clow <- pmax(0,ceiling(low))
-  flow <- pmax(0,floor(low))
+  clow <- pmax(1,ceiling(low))
+  flow <- pmax(1,floor(low))
   chigh <- pmin(n, ceiling(high))
-  fhigh <- pmin(n,floor(high))
+  fhigh <- pmin(n, floor(high))
 
   lvllow <- rev(rowMeans(cbind(y[clow],y[flow]), na.rm=T))
   if (length(lvllow) == 0) lvllow <- NA
@@ -118,7 +118,8 @@ confintLV <- function(x, k, alpha=0.95) {
   lvulow <- rowMeans(cbind(y[n-clow],y[n-flow]), na.rm=T)[-1]
   lvuhigh <- rowMeans(cbind(y[n-chigh],y[n-fhigh]), na.rm=T)[-1]
 #  conf <- cbind(c(y[rev(low[-1])],y[n-high]),c(y[rev(high[-1])],y[n-low]))
-  conf <- cbind(c(lvllow, lvulow), c(lvlhigh, lvuhigh))	
+
+  conf <- cbind(c(lvllow, lvulow), c(lvlhigh, lvuhigh))
 
   colnames(conf) <- c(paste((1-alpha)/2*100,"%",sep=""),paste((alpha+(1-alpha)/2)*100,"%",sep=""))
   conf
