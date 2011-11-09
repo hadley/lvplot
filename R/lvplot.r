@@ -144,25 +144,15 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
        xx <- z[x==i]
 	   n <- length(xx)
 	   k <- determineDepth(n,src.k,alpha,perc) 
-	   
-	 # compute letter values based on depth  
-	   depth    <- rep(0,k)
-	   depth[1] <- (1 + n)/2
-	   if (k > 1) {
-		 for (j in 2:k) {depth[j] <- (1 + floor(depth[j-1]))/2 } 
-	   }
-	   
-	   y <- sort(xx)
-	   d <- c(rev(depth),n-depth+1)
-	   qu <- (y[floor(d)] + y[ceiling(d)])/2 	
-		 # floor and ceiling is the same for .0 values
-		 # .5 values yield average of two neighbours
-	   
+
+	 # compute k letter values  
+	   qu <- calcLV(x, k)
+	   	   
 	 # determine outliers
 	   out <- (xx<qu[1]) | (xx>qu[2*k])            
 		  
 	   drawLVplot(xx,pt,k,out,qu,horizontal,col=col[(kmax-k) +1:k],...)
-	   result[[pt]] <- outputLVplot(xx,qu,k,out,depth,alpha)      
+	   result[[pt]] <- outputLVplot(xx,qu,k,out,alpha)      
 	   pt <- pt+1
     }
     invisible(as.list(result))
@@ -190,18 +180,7 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
   if (length(src.col)==0) col <- rep("grey",k) 
 #  if (length(src.col > 1)) col <- src.col
   
-# compute letter values based on depth  
-  depth    <- rep(0,k)
-  depth[1] <- (1 + n)/2
-  if (k > 1) {
-    for (j in 2:k) {depth[j] <- (1 + floor(depth[j-1]))/2 } 
-  }
-  
-  y <- sort(x)
-  d <- c(rev(depth),n-depth+1)
-  qu <- (y[floor(d)] + y[ceiling(d)])/2 	
-    # floor and ceiling is the same for .0 values
-  	# .5 values yield average of two neighbours
+  qu <- calcLV(x, k)
   
 # determine outliers
   out <- (x<qu[1]) | (x>qu[2*k])               
@@ -231,6 +210,6 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
      
   drawLVplot(x,pt,k,out,qu,horizontal,col,...)
 
-  result <- outputLVplot(x,qu,k,out,depth,alpha)
+  result <- outputLVplot(x,qu,k,out,alpha)
   invisible(result)
 }
