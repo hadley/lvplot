@@ -2,7 +2,7 @@
 \alias{outputLVplot}
 \title{Compute letter value summary table.}
 \usage{
-  outputLVplot(x, qu, k, out, depth, alpha)
+  outputLVplot(x, qu, k, out, alpha)
 }
 \arguments{
   \item{x}{numeric vector}
@@ -11,10 +11,6 @@
 
   \item{out}{binary vector of outliers (\code{TRUE} for
   outlier, \code{FALSE} otherwise)}
-
-  \item{depth}{depth of the corresponding LV statistic
-  (i.e. how far from the outside do we have to go into the
-  sorted data values?)}
 
   \item{k}{number of letter value statistics used}
 
