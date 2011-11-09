@@ -34,9 +34,9 @@ nameLV <- function(k) {
   #  k letter values (starting with median)
   #  lower/upper letter values ordered from lowest to highest
   
-  lvs <- LETTERS[6:1], LETTERS[c(26:14, 12:7)]
+  lvs <- c(LETTERS[6:1], LETTERS[c(26:14, 12:7)])[1:(k - 1)]
   conf <- c(paste(rev(lvs), "l", sep = ""), "M", paste(lvs, "u", sep = ""))
-  list(LV = LV, conf = conf)
+  list(LV = c("M", lvs), conf = conf)
 }
 
 #' Determine depth of letter values needed for n observations.
@@ -83,6 +83,7 @@ lvtable <- function(x, k, alpha=0.95) {
   # letter value
   qu <- calcLV(x,k)
   
+  browser()
   tab <- matrix(c(c(rev(depth), depth[-1]), qu), ncol = 2,
     dimnames = list(nameLV(k)[[2]], c("depth","LV")))
 
