@@ -1,28 +1,28 @@
 # Get a vector of data depths for k letter values
 getDepth <- function(k, n) {
-   # compute letter values based on depth
-     depth <- rep(0,k)
-     depth[1] <- (1+n)/2
-     if (k > 1) {
-       for (j in 2:k) depth[j] <- (1+floor(depth[j-1]))/2
-     }
+  # compute letter values based on depth
+  depth <- rep(0,k)
+  depth[1] <- (1+n)/2
+  
+  if (k > 1) {
+    for (j in 2:k) depth[j] <- (1 + floor(depth[j - 1])) / 2
+  }
   depth
 }
 
 # Calculate first k letter values for vector x
 calcLV <- function(x, k) {
-# compute letter values based on depth  
   n <- length(x)
-  depth    <- getDepth(k,n)
+  depth <- getDepth(k, n)
   
   y <- sort(x)
   d <- c(rev(depth),n-depth+1)
-  qu <- (y[floor(d)] + y[ceiling(d)])/2 	
-    # floor and ceiling is the same for .0 values
-  	# .5 values yield average of two neighbours
+  qu <- (y[floor(d)] + y[ceiling(d)])/2
+  # floor and ceiling is the same for .0 values
+  # .5 values yield average of two neighbours
 
-# k, k+1 is the median 
-# report only once
+  # k, k+1 is the median 
+  # report only once
   qu[-k]
 }
 
@@ -30,16 +30,13 @@ calcLV <- function(x, k) {
 # output is (1) list of names starting with 'M'edian, and
 # (2) a vector of letter values ordered by rank from lower kth letter value to upper k letter value
 nameLV <- function(k) {
-	# list of 
-	#	k letter values (starting with median)
-	# 	lower/upper letter values ordered from lowest to highest
-
-	idx <- (((k-1):1 + (6-k)) %% 26) + 1
-	lvs <- toupper(letters[idx])
-    LV <- c('M',lvs)
-    conf <- c(paste(rev(lvs),"l",sep=""),
-             'M',paste(lvs,"u",sep=""))
-	list(LV, conf)
+  # list of 
+  #  k letter values (starting with median)
+  #  lower/upper letter values ordered from lowest to highest
+  
+  lvs <- LETTERS[6:1], LETTERS[c(26:14, 12:7)]
+  conf <- c(paste(rev(lvs), "l", sep = ""), "M", paste(lvs, "u", sep = ""))
+  list(LV = LV, conf = conf)
 }
 
 #' Determine depth of letter values needed for n observations.
@@ -56,16 +53,16 @@ nameLV <- function(k) {
 #' @export
 determineDepth <- function(n, k, alpha, perc) {
   if (!is.null(perc)) {
-  	# we're aiming for perc percent of outlying points
-  	k <- ceiling((log2(n))+1) - ceiling((log2(n*perc*0.01))+1)+1
+    # we're aiming for perc percent of outlying points
+    k <- ceiling((log2(n))+1) - ceiling((log2(n*perc*0.01))+1)+1
   }
   if (is.null(k)) { 
-  	# confidence intervals around an LV statistic 
-  	# should not extend into surrounding LV statistics
+    # confidence intervals around an LV statistic 
+    # should not extend into surrounding LV statistics
 
-  	k <- ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2))  
+    k <- ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2))  
   }
-  if (k < 1) k <- 1	
+  if (k < 1) k <- 1  
  
   return (k)
 }
@@ -96,8 +93,8 @@ lvtable <- function(x, k, alpha=0.95) {
 }
 
 
-confintLV <- function(x, k, alpha=0.95) {
 # confidence interval for k letter values
+confintLV <- function(x, k, alpha=0.95) {
   n <- length(x)
   y <- sort(x)
   
@@ -114,13 +111,14 @@ confintLV <- function(x, k, alpha=0.95) {
   if (length(lvllow) == 0) lvllow <- NA
   lvlhigh <- rev(rowMeans(cbind(y[chigh],y[fhigh]), na.rm=T))
   if (length(lvlhigh) == 0) lvlhigh <- NA
-# no 1 is the median - that's the last element in lvl
+  # no 1 is the median - that's the last element in lvl
   lvulow <- rowMeans(cbind(y[n-clow],y[n-flow]), na.rm=T)[-1]
   lvuhigh <- rowMeans(cbind(y[n-chigh],y[n-fhigh]), na.rm=T)[-1]
-#  conf <- cbind(c(y[rev(low[-1])],y[n-high]),c(y[rev(high[-1])],y[n-low]))
+  #  conf <- cbind(c(y[rev(low[-1])],y[n-high]),c(y[rev(high[-1])],y[n-low]))
 
   conf <- cbind(c(lvllow, lvulow), c(lvlhigh, lvuhigh))
 
-  colnames(conf) <- c(paste((1-alpha)/2*100,"%",sep=""),paste((alpha+(1-alpha)/2)*100,"%",sep=""))
+  colnames(conf) <- c(paste((1 - alpha) / 2 * 100, "%" ,sep = "") , 
+    paste((alpha + (1 - alpha) / 2) * 100, "%", sep = ""))
   conf
 }
