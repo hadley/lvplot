@@ -149,7 +149,7 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
 	   qu <- calcLV(x, k)
 	   	   
 	 # determine outliers
-	   out <- (xx<qu[1]) | (xx>qu[2*k])            
+     out <- ((xx<min(qu)) + (xx>max(qu))) > 0               
 		  
 	   drawLVplot(xx,pt,k,out,qu,horizontal,col=col[(kmax-k) +1:k],...)
 	   result[[pt]] <- outputLVplot(xx,qu,k,out,alpha)      
@@ -183,7 +183,7 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
   qu <- calcLV(x, k)
   
 # determine outliers
-  out <- (x<qu[1]) | (x>qu[2*k])               
+  out <- ((x<min(qu)) + (x>max(qu))) > 0               
   if (k < 1) out <- x
 
   pt <- 0.5
