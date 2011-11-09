@@ -112,9 +112,8 @@ confintLV <- function(x, k, alpha=0.95) {
   lvlhigh <- rev(rowMeans(cbind(y[chigh],y[fhigh]), na.rm=T))
   if (length(lvlhigh) == 0) lvlhigh <- NA
   # no 1 is the median - that's the last element in lvl
-  lvulow <- rowMeans(cbind(y[n-clow],y[n-flow]), na.rm=T)[-1]
-  lvuhigh <- rowMeans(cbind(y[n-chigh],y[n-fhigh]), na.rm=T)[-1]
-  #  conf <- cbind(c(y[rev(low[-1])],y[n-high]),c(y[rev(high[-1])],y[n-low]))
+  lvulow <- rowMeans(cbind(y[n-chigh],y[n-fhigh]), na.rm=T)[-1]
+  lvuhigh <- rowMeans(cbind(y[n-clow],y[n-flow]), na.rm=T)[-1]
 
   conf <- cbind(c(lvllow, lvulow), c(lvlhigh, lvuhigh))
 
