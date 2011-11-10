@@ -103,11 +103,13 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
   src.k <- k 
   src.col <- col 
 
-  # don't know what to do with missing data - for right now, we will delete
-  dft <- data.frame(x=x,z=z)
-  dft <- na.omit(dft)
-  x <- dft$x
-  z <- dft$z
+  # Drop missing values with a message
+  missing <- is.na(x) | is.na(z)
+  if (any(missing)) {
+    message("Dropping ", sum(missing), " missing values.")
+    x <- x[!missing]
+    z <- z[!misssing]
+  }
 
   pt <- 1
   if (horizontal) {
@@ -138,22 +140,21 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
   xtable <- table(x, useNA="ifany")
   kmax <- determineDepth(max(xtable),src.k,alpha,perc)
   if (length(src.col)==1) col <- color_scale(src.col, kmax)    
-  if ((length(src.col)==0)) col <- rep("grey",kmax) 
+  if (length(src.col)==0) col <- rep("grey",kmax) 
   #       if (length(src.col > 1)) col <- src.col
   
-  result <- list(length(setx))
-  for (i in setx) {
-   xx <- z[x==i]
+  boxes <- split(z, x)
+  result <- vector("list", length(boxes))
+  for (i in seq_along(boxes)) {
+   xx <- boxes[[i]]
    n <- length(xx)
-   k <- determineDepth(n,src.k,alpha,perc) 
+   k <- determineDepth(n, src.k, alpha, perc) 
 
-   # compute k letter values  
-   qu <- calcLV(x, k)
+   # compute letter values and outliers
+   qu <- calcLV(xx, k)
+   out <- xx < min(qu) | xx > max(qu)
 
-   # determine outliers
-   out <- ((xx<min(qu)) + (xx>max(qu))) > 0               
-
-   drawLVplot(xx,pt,k,out,qu,horizontal,col=col[(kmax-k) +1:k],...)
+   drawLVplot(xx,i,k,out,qu,horizontal,col=col[(kmax-k) +1:k],...)
    result[[pt]] <- outputLVplot(xx,qu,k,out,alpha)      
    pt <- pt+1
   }
