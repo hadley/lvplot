@@ -2,7 +2,7 @@
 \alias{determineDepth}
 \title{Determine depth of letter values needed for n observations.}
 \usage{
-  determineDepth(n, k, alpha, perc)
+  determineDepth(n, k = NULL, alpha = NULL, perc = NULL)
 }
 \arguments{
   \item{n}{number of observation to be shown in the LV

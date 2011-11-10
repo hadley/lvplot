@@ -38,17 +38,21 @@ outputLVplot <- function(x,qu,k,out,alpha) {
 #' @param qu quantiles
 #' @param horizontal display horizontally (TRUE) or vertically (FALSE)
 #' @param col vector of colours to use
+#' @param width height/width of box
 #' @keywords internal
-drawLVplot <- function(x,y,k,out,qu,horizontal,col,...) {
+drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9,...) {
+  i <- seq_len(k)
+  offset <- (i / (2 * k)) * width
+  y <- rep(y, length(x))
+  
+  lower <- i
+  upper <- rev(seq_len(k) + k - 1)
+  
   if (horizontal) { 
-	points(x[out],rep(y,length(x[out])),pch=8)		
-	# draw boxes:
-	for (i in 1:k) 
-		rect(qu[i], y+i/(2*k),qu[2*k-i+1], y-i/(2*k), col=col[i])
+    points(x[out], y[out], pch = 8)        
+    rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
   } else { # draw vertical plot
-	points(rep(y,length(x[out])),x[out],pch=8)						 
-	# draw boxes:
-	for (i in 1:k) 
-		rect(y+i/(2*k),qu[i], y-i/(2*k), qu[2*k-i+1], col=col[i])
+    points(y[out], x[out], pch = 8)                         
+    rect(y[i] + offset, qu[lower], y[i] - offset, qu[upper], col = col)
   }
 }

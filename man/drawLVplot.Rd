@@ -2,7 +2,8 @@
 \alias{drawLVplot}
 \title{Draw an LV plot.}
 \usage{
-  drawLVplot(x, y, k, out, qu, horizontal, col, ...)
+  drawLVplot(x, y, k, out, qu, horizontal, col,
+    width = 0.9, ...)
 }
 \arguments{
   \item{x}{x positions}
@@ -19,6 +20,8 @@
   vertically (FALSE)}
 
   \item{col}{vector of colours to use}
+
+  \item{width}{height/width of box}
 }
 \description{
   Draw an LV plot.
