@@ -59,7 +59,7 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
   if (length(src.col)==1) col <- color_scale(src.col, kmax)	
   if ((length(src.col)==0)) col <- rep("grey",kmax) 
 
-  xy <- cbind(x,y)
+  xy <- data.frame(x,y, order=1:length(x))
 
 	if (method=="convex") {
 	# compute halfspace depth
@@ -114,4 +114,6 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
 	
 		points(res[which(res[,3]>=Qmin),1:2], pch=".")
 		points(res[which(res[,3]<Qmin),1:2], ...)
-	}
+
+  invisible(list(outliers=res[which(res[,3]<Qmin),1:2]))
+}
