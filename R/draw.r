@@ -49,10 +49,10 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9,...) {
   upper <- rev(seq_len(k) + k - 1)
   
   if (horizontal) { 
-    points(x[out], y[out], pch = 8)        
+    points(x[out], y[out], pch = 1, cex=0.7)        
     rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
   } else { # draw vertical plot
-    points(y[out], x[out], pch = 8)                         
+    points(y[out], x[out], pch = 1, cex=0.7)                         
     rect(y[i] + offset, qu[lower], y[i] - offset, qu[upper], col = col)
   }
 }
