@@ -108,7 +108,7 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
   if (any(missing)) {
     message("Dropping ", sum(missing), " missing values.")
     x <- x[!missing]
-    z <- z[!misssing]
+    z <- z[!missing]
   }
 
   pt <- 1
