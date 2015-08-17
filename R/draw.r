@@ -40,19 +40,25 @@ outputLVplot <- function(x,qu,k,out,alpha) {
 #' @param col vector of colours to use
 #' @param width height/width of box
 #' @keywords internal
-drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9,...) {
+drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9, median.col, ...) {
   i <- seq_len(k)
   offset <- (i / (2 * k)) * width
   y <- rep(y, length(x))
   
   lower <- i
   upper <- rev(seq_len(k) + k - 1)
-  
   if (horizontal) { 
     points(x[out], y[out], pch = 1, cex=0.7)        
     rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
+    # draw the median as a line
+    med = length(lower)
+    lines(x=c(qu[med],qu[med]), 
+          y=c(y[med]-offset[med], y[med]+offset[med]), col=median.col)
   } else { # draw vertical plot
     points(y[out], x[out], pch = 1, cex=0.7)                         
     rect(y[i] + offset, qu[lower], y[i] - offset, qu[upper], col = col)
+    med = length(lower)
+    lines(x=c(y[med]-offset[med], y[med]+offset[med]),
+          y=c(qu[med],qu[med]), col=median.col)
   }
 }
