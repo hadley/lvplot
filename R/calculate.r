@@ -45,8 +45,8 @@ nameLV <- function(k) {
 #'
 #' @param n number of observation to be shown in the LV boxplot
 #' @param k number of letter value statistics used 
-#' @param alpha if supplied, depth k is calculated such that confidence
-#'   intervals of width \code{alpha} of an LV statistic do not extend into
+#' @param alpha if supplied, depth k is calculated such that (1-\code{alpha})100% confidence
+#'   intervals of an LV statistic do not extend into
 #'   neighboring LV statistics. 
 #' @param perc if supplied, depth k is adjusted such that \code{perc} percent
 #'   outliers are shown 
@@ -66,7 +66,9 @@ determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
     stopifnot(is.numeric(alpha) && length(alpha) == 1)
     stopifnot(alpha > 0 && alpha < 1)
 
-    k <- ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2))
+    cat(sprintf("two rules: %d (ceiling) %d (floor)", ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2)),
+            floor(log2(n)) - floor(log2(2*qnorm(1-(1-alpha)/2)^2))))
+    k <- floor(log2(n)) - floor(log2(2*qnorm(1-(1-alpha)/2)^2))
   } else {
     stop("Must specify one of k, alpha, perc", call. = FALSE)
   }
