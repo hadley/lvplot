@@ -66,8 +66,8 @@ determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
     stopifnot(is.numeric(alpha) && length(alpha) == 1)
     stopifnot(alpha > 0 && alpha < 1)
 
-    cat(sprintf("two rules: %d (ceiling) %d (floor)", ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2)),
-            floor(log2(n)) - floor(log2(2*qnorm(1-(1-alpha)/2)^2))))
+#    cat(sprintf("two rules: %d (ceiling) %d (floor)", ceiling((log2(n))-log2(2*qnorm(alpha+(1-alpha)/2)^2)),
+#            floor(log2(n)) - floor(log2(2*qnorm(1-(1-alpha)/2)^2))))
     k <- floor(log2(n)) - floor(log2(2*qnorm(1-(1-alpha)/2)^2))
   } else {
     stop("Must specify one of k, alpha, perc", call. = FALSE)
