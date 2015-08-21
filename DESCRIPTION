@@ -11,8 +11,3 @@ Authors@R: c(
 License: GPL (>= 2)
 Suggests:
     depth
-Collate:
-    'calculate.r'
-    'draw.r'
-    'lvbagplot.R'
-    'lvplot.r'
