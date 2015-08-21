@@ -1,15 +1,14 @@
 Package: lvplot
-Type: Package
-Title: Level value plots for R
 Version: 0.1
-Author: Heike Hofmann <hofmann@iastate.edu>, Hadley Wickham
-    <h.wickham@gmail.com>
-Maintainer: Hadley Wickham <h.wickham@gmail.com>
-Description: This package implements the letter value
-    boxplot which extend the standard boxplot to deal with
-    both larger and smaller data by dynamically selecting
-    the appropriate number of letter values to display.
-License: MIT
+Title: Level Value Boxplots
+Description: This package implements the letter value boxplot which extend the
+    standard boxplot to deal with both larger and smaller data by dynamically
+    selecting the appropriate number of letter values to display.
+Authors@R: c(
+    person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
+    person("Heike", "Hofmann", , "hofmann@iastate.edu", "aut")
+    )
+License: GPL (>= 2)
 Suggests:
     depth
 Collate:
