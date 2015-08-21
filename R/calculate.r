@@ -3,7 +3,7 @@ getDepth <- function(k, n) {
   # compute letter values based on depth
   depth <- rep(0,k)
   depth[1] <- (1+n)/2
-  
+
   if (k > 1) {
     for (j in 2:k) depth[j] <- (1 + floor(depth[j - 1])) / 2
   }
@@ -14,14 +14,14 @@ getDepth <- function(k, n) {
 calcLV <- function(x, k) {
   n <- length(x)
   depth <- getDepth(k, n)
-  
+
   y <- sort(x)
   d <- c(rev(depth),n-depth+1)
   qu <- (y[floor(d)] + y[ceiling(d)])/2
   # floor and ceiling is the same for .0 values
   # .5 values yield average of two neighbours
 
-  # k, k+1 is the median 
+  # k, k+1 is the median
   # report only once
   qu[-k]
 }
@@ -30,26 +30,26 @@ calcLV <- function(x, k) {
 # output is (1) list of names starting with 'M'edian, and
 # (2) a vector of letter values ordered by rank from lower kth letter value to upper k letter value
 nameLV <- function(k) {
-  # list of 
+  # list of
   #  k letter values (starting with median)
   #  lower/upper letter values ordered from lowest to highest
-  
+
   lvs <- c(LETTERS[6:1], LETTERS[c(26:14, 12:7)])[1:(k - 1)]
   conf <- c(paste(rev(lvs), "l", sep = ""), "M", paste(lvs, "u", sep = ""))
   list(LV = c("M", lvs), conf = conf)
 }
 
 #' Determine depth of letter values needed for n observations.
-#' 
+#'
 #' @details Supply one of \code{k}, \code{alpha} or \code{perc}.
 #'
 #' @param n number of observation to be shown in the LV boxplot
-#' @param k number of letter value statistics used 
+#' @param k number of letter value statistics used
 #' @param alpha if supplied, depth k is calculated such that (1-\code{alpha})100% confidence
 #'   intervals of an LV statistic do not extend into
-#'   neighboring LV statistics. 
+#'   neighboring LV statistics.
 #' @param perc if supplied, depth k is adjusted such that \code{perc} percent
-#'   outliers are shown 
+#'   outliers are shown
 #' @export
 determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
   if (!is.null(k)) {
@@ -60,8 +60,8 @@ determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
     stopifnot(is.numeric(perc) && length(perc) == 1)
 
     k <- ceiling((log2(n))+1) - ceiling((log2(n*perc*0.01))+1) + 1
-  } else if (!is.null(alpha)) { 
-    # confidence intervals around an LV statistic 
+  } else if (!is.null(alpha)) {
+    # confidence intervals around an LV statistic
     # should not extend into surrounding LV statistics
     stopifnot(is.numeric(alpha) && length(alpha) == 1)
     stopifnot(alpha > 0 && alpha < 1)
@@ -72,12 +72,12 @@ determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
   } else {
     stop("Must specify one of k, alpha, perc", call. = FALSE)
   }
-  
+
   max(k, 1L)
 }
 
 #' Compute table of k letter values for vector x
-#' 
+#'
 #' @param x input numeric vector
 #' @param k number of letter values to compute
 #' @param alpha alpha-threshold for confidence level
@@ -85,19 +85,19 @@ determineDepth <- function(n, k = NULL, alpha = NULL, perc = NULL) {
 lvtable <- function(x, k, alpha=0.95) {
   n <- length(x)
   if (2^k > n) k <- ceiling(log2(n)) + 1
-  
-  # depths for letter values 
+
+  # depths for letter values
   depth <- getDepth(k, n)
 
   # letter value
   qu <- calcLV(x,k)
-  
+
   tab <- matrix(c(c(rev(depth), depth[-1]), qu), ncol = 2,
     dimnames = list(nameLV(k)[[2]], c("depth","LV")))
 
   # confidence limits
   conf <- confintLV(x, k, alpha = alpha)
-  
+
   cbind(tab, conf)
 }
 
@@ -106,7 +106,7 @@ lvtable <- function(x, k, alpha=0.95) {
 confintLV <- function(x, k, alpha=0.95) {
   n <- length(x)
   y <- sort(x)
-  
+
   depth <- getDepth(k,n)
   extend <- ceiling(0.5 *sqrt(2*depth-1) * qnorm(alpha+(1-alpha)/2))
   low <- depth - extend
@@ -126,7 +126,7 @@ confintLV <- function(x, k, alpha=0.95) {
 
   conf <- cbind(c(lvllow, lvulow), c(lvlhigh, lvuhigh))
 
-  colnames(conf) <- c(paste((1 - alpha) / 2 * 100, "%" ,sep = "") , 
+  colnames(conf) <- c(paste((1 - alpha) / 2 * 100, "%" ,sep = "") ,
     paste((alpha + (1 - alpha) / 2) * 100, "%", sep = ""))
   conf
 }

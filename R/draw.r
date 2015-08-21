@@ -1,9 +1,8 @@
-
 #' Compute letter value summary table.
-#' 
+#'
 #' @param x numeric vector
 #' @param qu quantiles to compute
-#' @param out binary vector of outliers (\code{TRUE} for outlier, 
+#' @param out binary vector of outliers (\code{TRUE} for outlier,
 #'   \code{FALSE} otherwise)
 #' @inheritParams determineDepth
 #' @keywords internal
@@ -15,9 +14,9 @@
 #'  \item{out}{list of defined outliers}
 outputLVplot <- function(x,qu,k,out,alpha) {
   n <- length(x)
-  
+
   depth <- getDepth(k,n)
-  
+
   LV <- cbind(depth,lower=qu[k:1],upper=qu[k-1+1:k])
   conf <- confintLV(x, k, alpha=alpha)
 
@@ -44,18 +43,18 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9, median.col, ...)
   i <- seq_len(k)
   offset <- (i / (2 * k)) * width
   y <- rep(y, length(x))
-  
+
   lower <- i
   upper <- rev(seq_len(k) + k - 1)
-  if (horizontal) { 
-    points(x[out], y[out], pch = 1, cex=0.7)        
+  if (horizontal) {
+    points(x[out], y[out], pch = 1, cex=0.7)
     rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
     # draw the median as a line
     med = length(lower)
-    lines(x=c(qu[med],qu[med]), 
+    lines(x=c(qu[med],qu[med]),
           y=c(y[med]-offset[med], y[med]+offset[med]), col=median.col)
   } else { # draw vertical plot
-    points(y[out], x[out], pch = 1, cex=0.7)                         
+    points(y[out], x[out], pch = 1, cex=0.7)
     rect(y[i] + offset, qu[lower], y[i] - offset, qu[upper], col = col)
     med = length(lower)
     lines(x=c(y[med]-offset[med], y[med]+offset[med]),
