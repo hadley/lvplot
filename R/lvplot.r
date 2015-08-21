@@ -1,3 +1,8 @@
+#' @importFrom grDevices chull col2rgb hsv rgb rgb2hsv
+#' @importFrom graphics abline axis box grid lines par plot points polygon rect
+#' @importFrom stats qnorm
+NULL
+
 color_scale <- function(src.col, k) {
 # starting colour src.col
 # number of colours
