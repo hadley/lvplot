@@ -80,10 +80,9 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
 
 	}
 	if (method=="depth") {
-		require(depth)
 		dep <- vector(length=nrow(xy))
 		for (i in 1:nrow(xy))
-			dep[i] <- depth(xy[i,],xy)
+			dep[i] <- depth::depth(xy[i,],xy)
 		res <- cbind(xy,round(dep*nrow(xy)))
 	}
 	# compute median as average of points with maximal halfspace depth
