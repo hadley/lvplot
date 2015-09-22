@@ -33,8 +33,9 @@ nameLV <- function(k) {
   # list of
   #  k letter values (starting with median)
   #  lower/upper letter values ordered from lowest to highest
-
-  lvs <- c(LETTERS[6:1], LETTERS[c(26:14, 12:7)])[1:(k - 1)]
+  lvs <- ""
+  if (k > 1)
+    lvs <- c(LETTERS[6:1], LETTERS[c(26:14, 12:7)])[1:(k - 1)]
   conf <- c(paste(rev(lvs), "l", sep = ""), "M", paste(lvs, "u", sep = ""))
   list(LV = c("M", lvs), conf = conf)
 }
