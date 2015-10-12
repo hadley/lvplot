@@ -2,6 +2,11 @@
 
 S3method(LVboxplot,formula)
 S3method(LVboxplot,numeric)
+export(GeomLvplot)
 export(LVboxplot)
+export(StatLvplot)
 export(determineDepth)
+export(geom_lvplot)
 export(lvtable)
+export(stat_lvplot)
+importFrom(grid,grobTree)
