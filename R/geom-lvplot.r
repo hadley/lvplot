@@ -73,7 +73,7 @@
 #' }
 geom_lvplot <- function(mapping = NULL, data = NULL, stat = "lvplot",
   position = "dodge", outlier.colour = "black", outlier.shape = 19,
-  outlier.size = 1.5, outlier.stroke = 0.5,
+  outlier.size = 1.5, outlier.stroke = 0.5, na.rm = TRUE,
   varwidth = FALSE, show.legend = NA, inherit.aes = TRUE, ...)
 {
   ggplot2::layer(
@@ -85,6 +85,7 @@ geom_lvplot <- function(mapping = NULL, data = NULL, stat = "lvplot",
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
+      na.rm = na.rm,
       outlier.colour = outlier.colour,
       outlier.shape = outlier.shape,
       outlier.size = outlier.size,

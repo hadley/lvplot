@@ -18,7 +18,7 @@
 #' }
 #' @export
 stat_lvplot <- function(mapping = NULL, data = NULL, geom = "lvplot",
-  position = "dodge", na.rm = FALSE, conf = 0.95, percent = NULL, k = NULL, show.legend = NA,
+  position = "dodge", na.rm = TRUE, conf = 0.95, percent = NULL, k = NULL, show.legend = NA,
   inherit.aes = TRUE, ...)
 {
   ggplot2::layer(
