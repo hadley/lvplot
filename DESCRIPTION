@@ -14,5 +14,6 @@ Suggests:
 Depends:
     R (>= 2.14)
 Imports:
-  ggplot2 (>= 1.0.1.9003),
-  grid
+    ggplot2 (>= 1.0.1.9003),
+    grid
+RoxygenNote: 5.0.1

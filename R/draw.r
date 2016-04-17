@@ -51,13 +51,19 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9, median.col, ...)
     rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
     # draw the median as a line
     med = length(lower)
+    oldpar <- par()
+    par(lwd=1.5*oldpar$lwd)
     lines(x=c(qu[med],qu[med]),
           y=c(y[med]-offset[med], y[med]+offset[med]), col=median.col)
+    par(lwd=oldpar$lwd)
   } else { # draw vertical plot
     points(y[out], x[out], pch = 1, cex=0.7)
     rect(y[i] + offset, qu[lower], y[i] - offset, qu[upper], col = col)
     med = length(lower)
+    oldpar <- par()
+    par(lwd=1.5*oldpar$lwd)
     lines(x=c(y[med]-offset[med], y[med]+offset[med]),
           y=c(qu[med],qu[med]), col=median.col)
+    par(lwd=oldpar$lwd)
   }
 }
