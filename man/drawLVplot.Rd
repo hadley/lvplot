@@ -26,7 +26,7 @@ drawLVplot(x, y, k, out, qu, horizontal, col, border = "black", width = 0.9,
 
 \item{width}{maximum height/width of box}
 
-\item{width.method}{one of 'linear' or 'proportional'.}
+\item{width.method}{one of 'linear', 'height' or 'area'. Methods 'height' and 'area' ensure that these dimension are proportional to the number of observations within each box.}
 }
 \description{
 Draw an LV plot.

@@ -39,7 +39,7 @@ outputLVplot <- function(x,qu,k,out,alpha) {
 #' @param col vector of colours to use
 #' @param border vector of colours to use
 #' @param width maximum height/width of box
-#' @param width.method one of 'linear' or 'proportional'.
+#' @param width.method one of 'linear', 'height' or 'area'. Methods 'height' and 'area' ensure that these dimension are proportional to the number of observations within each box.
 #' @keywords internal
 drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, width.method = "linear", median.col, ...) {
 #browser()
@@ -49,18 +49,23 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
   lower <- i[-k]
   upper <- rev(seq_len(k-1) + k)
 
-  if (width.method=="linear")
-    offset <- width* c(lower / (2 * k), .5, rev(lower) / (2 * k))
-  else {
-    if (width.method=="proportional") {
-  #    browser()
-      offset <- rep(.5, length(lower))
+  if (width.method=="linear") {
+    offset <- width/2* c(lower / k, 1, rev(lower) / k)
+  } else {
+    if (width.method=="area") {
+      #    browser()
       areas <- .5*c(2^(lower-k), rev(2^(lower-k)))
       height <- diff(qu)
       # offset is half the width
       offset <- width/2*c(areas[lower]/height[lower], 1,
-                     rev(areas[upper-1])/rev(height[upper-1]))
-    } else stop("parameter width.method is not specified. Use 'linear' or 'proportional'")
+                          rev(areas[upper-1])/rev(height[upper-1]))
+    } else {
+      if (width.method=="height") {
+#        browser()
+        height <- 2*c(2^(lower-k), rev(2^(lower-k)))
+        offset <- width/2*c(height[lower], 1, rev(height[upper-1]))
+      } else stop("parameter width.method is not specified. Use 'linear' or 'proportional'")
+    }
   }
 
 
@@ -78,7 +83,7 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
     # draw the median as a line
     med = length(lower) + 1
     oldpar <- par()
-    par(lwd=1.5*oldpar$lwd)
+    par(lwd=2*oldpar$lwd)
     lines(x=c(qu[med],qu[med]),
           y=c(y[med]-offset[med], y[med]+offset[med]), col=median.col)
     par(lwd=oldpar$lwd)
@@ -93,7 +98,7 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
 
     med = length(lower)+1
     oldpar <- par()
-    par(lwd=1.5*oldpar$lwd)
+    par(lwd=2*oldpar$lwd)
     lines(x=c(y[med]-offset[med], y[med]+offset[med]),
           y=c(qu[med],qu[med]), col=median.col)
     par(lwd=oldpar$lwd)
