@@ -36,3 +36,11 @@
 #' p + geom_lvplot(aes(fill=..LV..)) + scale_fill_manual(values=colors) +theme_bw()
 "ontime"
 
+#' County demographics based on 1980 US Census
+#'
+#' data frame based on the 1980 US Census
+#' @format A data frame with 17 variables
+#' \itemize{
+#' \item name
+#' }
+"census"
