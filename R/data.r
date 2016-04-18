@@ -26,7 +26,6 @@
 #' }
 #' @examples
 #' data(ontime)
-#' library(ggplot2)
 #' library(RColorBrewer)
 #' greys <- rev(brewer.pal(9, "Greys"))
 #' oranges <- brewer.pal(3, "Oranges")
