@@ -37,20 +37,46 @@ outputLVplot <- function(x,qu,k,out,alpha) {
 #' @param qu quantiles
 #' @param horizontal display horizontally (TRUE) or vertically (FALSE)
 #' @param col vector of colours to use
-#' @param width height/width of box
+#' @param border vector of colours to use
+#' @param width maximum height/width of box
+#' @param width.method one of 'linear' or 'proportional'.
 #' @keywords internal
-drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9, median.col, ...) {
+drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, width.method = "linear", median.col, ...) {
+#browser()
   i <- seq_len(k)
-  offset <- (i / (2 * k)) * width
   y <- rep(y, length(x))
 
-  lower <- i
-  upper <- rev(seq_len(k) + k - 1)
+  lower <- i[-k]
+  upper <- rev(seq_len(k-1) + k)
+
+  if (width.method=="linear")
+    offset <- width* c(lower / (2 * k), .5, rev(lower) / (2 * k))
+  else {
+    if (width.method=="proportional") {
+  #    browser()
+      offset <- rep(.5, length(lower))
+      areas <- .5*c(2^(lower-k), rev(2^(lower-k)))
+      height <- diff(qu)
+      # offset is half the width
+      offset <- width/2*c(areas[lower]/height[lower], 1,
+                     rev(areas[upper-1])/rev(height[upper-1]))
+    } else stop("parameter width.method is not specified. Use 'linear' or 'proportional'")
+  }
+
+
   if (horizontal) {
     points(x[out], y[out], pch = 1, cex=0.7)
-    rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
+
+    # bottom rectangles:
+    rect(qu[lower], y[lower] + offset[lower],
+         qu[lower+1], y[lower] - offset[lower], col = col, border=border)
+    # top rectangles (lower is correct for the offset - it's not nice looking, though):
+    rect(qu[upper-1], y[upper] + offset[upper],
+         qu[upper], y[upper] - offset[upper], col = col, border=border)
+
+#    rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
     # draw the median as a line
-    med = length(lower)
+    med = length(lower) + 1
     oldpar <- par()
     par(lwd=1.5*oldpar$lwd)
     lines(x=c(qu[med],qu[med]),
@@ -58,8 +84,14 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col,width = 0.9, median.col, ...)
     par(lwd=oldpar$lwd)
   } else { # draw vertical plot
     points(y[out], x[out], pch = 1, cex=0.7)
-    rect(y[i] + offset, qu[lower], y[i] - offset, qu[upper], col = col)
-    med = length(lower)
+    # bottom rectangles:
+    rect(y[lower] + offset[lower], qu[lower],
+         y[lower] - offset[lower], qu[lower+1], col = col, border=border)
+    # top rectangles (lower is correct for the offset - it's not nice looking, though):
+    rect(y[upper] + offset[upper], qu[upper-1],
+         y[upper] - offset[upper], qu[upper], col = col, border=border)
+
+    med = length(lower)+1
     oldpar <- par()
     par(lwd=1.5*oldpar$lwd)
     lines(x=c(y[med]-offset[med], y[med]+offset[med]),

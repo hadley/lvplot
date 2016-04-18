@@ -4,7 +4,8 @@
 \alias{drawLVplot}
 \title{Draw an LV plot.}
 \usage{
-drawLVplot(x, y, k, out, qu, horizontal, col, width = 0.9, median.col, ...)
+drawLVplot(x, y, k, out, qu, horizontal, col, border = "black", width = 0.9,
+  width.method = "linear", median.col, ...)
 }
 \arguments{
 \item{x}{x positions}
@@ -21,7 +22,11 @@ drawLVplot(x, y, k, out, qu, horizontal, col, width = 0.9, median.col, ...)
 
 \item{col}{vector of colours to use}
 
-\item{width}{height/width of box}
+\item{border}{vector of colours to use}
+
+\item{width}{maximum height/width of box}
+
+\item{width.method}{one of 'linear' or 'proportional'.}
 }
 \description{
 Draw an LV plot.
