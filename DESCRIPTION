@@ -1,6 +1,6 @@
 Package: lvplot
 Version: 0.1.1
-Title: Level Value Boxplots
+Title: Letter Value Boxplots
 Description: This package implements the letter value boxplot which extends the
     standard boxplot to deal with both larger and smaller number of data points
     by dynamically selecting the appropriate number of letter values to display.
