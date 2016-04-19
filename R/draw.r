@@ -56,8 +56,9 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
       #    browser()
       areas <- .5*c(2^(lower-k), rev(2^(lower-k)))
       height <- diff(qu)
+  #    browser()
       # offset is half the width
-      offset <- width/2*c(areas[lower]/height[lower], 1,
+      offset <- width/2*c(areas[lower]/height[lower], .9*min(1, 1/width),
                           rev(areas[upper-1])/rev(height[upper-1]))
     } else {
       if (width.method=="height") {
