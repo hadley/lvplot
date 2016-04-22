@@ -25,14 +25,18 @@
 #' \item  LateAircraftDelay	Late Aircraft Delay, in Minutes
 #' }
 #' @examples
-#' data(ontime)
 #' library(RColorBrewer)
 #' greys <- rev(brewer.pal(9, "Greys"))
 #' oranges <- brewer.pal(3, "Oranges")
-#' colors <- c("white", greys[2:4], oranges[3], greys[4:6], oranges[2], greys[6:8], oranges[1], greys[8:9])
+#' colors <- c("white", greys[2:4], oranges[3], greys[4:6], oranges[2],
+#'    greys[6:8], oranges[1], greys[8:9])
 #'
-#' p <- ggplot(data = ontime, aes(UniqueCarrier, sqrt(TaxiIn+TaxiOut)))
-#' p + geom_lvplot(aes(fill=..LV..)) + scale_fill_manual(values=colors) +theme_bw()
+#' library(ggplot2)
+#' ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
+#'   geom_lvplot(aes(fill = ..LV..)) +
+#'   scale_fill_manual(values = colors) +
+#'   scale_y_sqrt() +
+#'   theme_bw()
 "ontime"
 
 #' County demographics based on 1980 US Census
