@@ -1,5 +1,5 @@
 Package: lvplot
-Version: 0.1.1
+Version: 0.1.1.9000
 Title: Letter Value Boxplots
 Description: This package implements the letter value boxplot which extends the
     standard boxplot to deal with both larger and smaller number of data points
@@ -9,13 +9,13 @@ Authors@R: c(
     person("Heike", "Hofmann", , "hofmann@iastate.edu", "aut")
     )
 License: GPL (>= 2)
-Suggests:
-    depth
 Depends:
     R (>= 2.14)
 Imports:
     ggplot2 (>= 1.0.1.9003),
     grid,
     RColorBrewer
+Suggests:
+    depth
 RoxygenNote: 5.0.1
 LazyData: true
