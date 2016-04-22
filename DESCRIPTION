@@ -17,3 +17,4 @@ Imports:
     ggplot2 (>= 1.0.1.9003),
     grid
 RoxygenNote: 5.0.1
+LazyData: true
