@@ -12,6 +12,7 @@
 #'  \item{conf.int}{confidence interval of corresponding letter value
 #'    statistic}
 #'  \item{out}{list of defined outliers}
+#' @noRd
 outputLVplot <- function(x,qu,k,out,alpha) {
   n <- length(x)
 

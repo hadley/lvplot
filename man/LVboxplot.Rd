@@ -2,19 +2,86 @@
 % Please edit documentation in R/lvplot.r
 \name{LVboxplot}
 \alias{LVboxplot}
-\title{LV box plot.}
+\alias{LVboxplot.formula}
+\alias{LVboxplot.numeric}
+\title{Side-by-side LV boxplots with base graphics}
 \usage{
 LVboxplot(x, ...)
+
+\method{LVboxplot}{formula}(formula, alpha = 0.95, k = NULL, perc = NULL,
+  horizontal = TRUE, xlab = NULL, ylab = NULL, col = "grey30",
+  bg = "grey90", median.col = "grey10", ...)
+
+\method{LVboxplot}{numeric}(x, alpha = 0.95, k = NULL, perc = NULL,
+  horizontal = TRUE, xlab = NULL, ylab = NULL, col = "grey30",
+  bg = "grey90", median.col = "grey10", ...)
+}
+\arguments{
+\item{x}{numeric vector of data}
+
+\item{...}{passed onto \code{\link{plot}}}
+
+\item{formula}{a plotting formula of the form \code{y ~ x}, where \code{x}
+is a string or factor. The values of \code{y} will be split into groups
+according to their values on \code{x} and separate letter value box plots
+of \code{y} are drawn side by side in the same display.}
+
+\item{alpha}{if supplied, depth k is calculated such that (1-\code{alpha})100% confidence
+intervals of an LV statistic do not extend into
+neighboring LV statistics.}
+
+\item{k}{number of letter value statistics used}
+
+\item{perc}{if supplied, depth k is adjusted such that \code{perc} percent
+outliers are shown}
+
+\item{horizontal}{display horizontally (TRUE) or vertically (FALSE)}
+
+\item{xlab}{x axis label}
+
+\item{ylab}{y axis label}
+
+\item{col}{vector of colours to use}
+
+\item{bg}{background colour}
+
+\item{median.col}{colour of the line for the median}
 }
 \description{
 An extension of standard boxplots which draws k letter statistics.
+Conventional boxplots (Tukey 1977) are useful displays for conveying rough
+information about the central 50\% of the data and the extent of the data.
 }
 \details{
-This is a generic method: please see specific methods for details.
+For moderate-sized data sets (\eqn{n < 1000}), detailed estimates of tail
+behavior beyond the quartiles may not be trustworthy, so the information
+provided by boxplots is appropriately somewhat vague beyond the quartiles,
+and the expected number of ``outliers'' and ``far-out'' values for a
+Gaussian sample of size \eqn{n} is often less than 10 (Hoaglin, Iglewicz,
+and Tukey 1986). Large data sets (\eqn{n \approx 10,000-100,000}) afford
+more precise estimates of quantiles in the tails beyond the quartiles and
+also can be expected to present a large number of ``outliers'' (about
+\eqn{0.4 + 0.007 n}).
+
+The letter-value box plot addresses both these shortcomings: it conveys
+more detailed information in the tails using letter values, only out to the
+depths where the letter values are reliable estimates of their
+corresponding quantiles (corresponding to tail areas of roughly
+\eqn{2^{-i}}); ``outliers'' are defined as a function of the most extreme
+letter value shown. All aspects shown on the letter-value boxplot are
+actual observations, thus remaining faithful to the principles that
+governed Tukey's original boxplot.
 }
-\seealso{
-Other letter.value.boxplots: \code{\link{LVboxplot.formula}},
-  \code{\link{LVboxplot.numeric}}
+\examples{
+n <- 10
+oldpar <- par()
+par(mfrow=c(4,2), mar=c(3,3,3,3))
+for (i in 1:4) {
+  x <- rexp(10 ^ (i + 1))
+  boxplot(x, col = "grey", horizontal = TRUE)
+  title(paste("Exponential, n = ", length(x)))
+  LVboxplot(x, col = "grey", xlab = "")
 }
-\keyword{internal}
+par(oldpar)
+}
 

@@ -7,7 +7,7 @@
 \alias{geom_lvplot}
 \alias{scale_fill_lv}
 \alias{stat_lvplot}
-\title{Side-by-side LV boxplots.}
+\title{Side-by-side LV boxplots with ggplot2.}
 \format{An object of class \code{GeomLvplot} (inherits from \code{Geom}, \code{ggproto}) of length 6.}
 \usage{
 geom_lvplot(mapping = NULL, data = NULL, stat = "lvplot",

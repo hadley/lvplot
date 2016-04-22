@@ -3,35 +3,7 @@
 #' @importFrom stats qnorm
 NULL
 
-color_scale <- function(src.col, k) {
-# starting colour src.col
-# number of colours
-  colrgb <- col2rgb(src.col)
-  colhsv <- rgb2hsv(colrgb)
-  if (colhsv[1,1] == 0) {
-    sat <- colhsv[2,1]
-  } else {
-    sat <- seq(0.1,colhsv[2,1], length.out=k)
-  }
-
-  val <- seq(0.9,colhsv[3,1], length.out=k)
-  colrgb <- col2rgb(hsv(colhsv[1,1], sat, val))
-  col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255)
-  col
-}
-
-#' LV box plot.
-#'
-#' An extension of standard boxplots which draws k letter statistics.
-#'
-#' This is a generic method: please see specific methods for details.
-#'
-#' @family letter-value boxplots
-#' @keywords internal
-#' @export
-LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
-
-#' Side-by-side LV boxplots.
+#' Side-by-side LV boxplots with base graphics
 #'
 #' An extension of standard boxplots which draws k letter statistics.
 #' Conventional boxplots (Tukey 1977) are useful displays for conveying rough
@@ -56,6 +28,11 @@ LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
 #' actual observations, thus remaining faithful to the principles that
 #' governed Tukey's original boxplot.
 #'
+#' @family letter-value boxplots
+#' @export
+LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
+
+
 #' @param formula a plotting formula of the form \code{y ~ x}, where \code{x}
 #'   is a string or factor. The values of \code{y} will be split into groups
 #'   according to their values on \code{x} and separate letter value box plots
@@ -68,9 +45,7 @@ LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
 #' @inheritParams drawLVplot
 #' @param ... passed onto \code{\link{plot}}
 #' @export
-#' @method LVboxplot formula
-#' @keywords hplot
-#' @family letter-value boxplots
+#' @rdname LVboxplot
 #' @examples
 #' n <- 10
 #' oldpar <- par()
@@ -167,15 +142,9 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
   invisible(as.list(result))
 }
 
-#' Draw a single LV boxplot.
-#'
 #' @param x numeric vector of data
-#' @inheritParams LVboxplot.formula
-#' @inheritParams determineDepth
-#' @inheritParams drawLVplot
-#' @family letter-value boxplots
 #' @export
-#' @method LVboxplot numeric
+#' @rdname LVboxplot
 LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", median.col="grey10", ...) {
   x.name <- as.list(match.call())[-1]$x
   x <- eval(x,  parent.frame())
@@ -222,3 +191,21 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
   result <- outputLVplot(x,qu,k,out,alpha)
   invisible(result)
 }
+
+color_scale <- function(src.col, k) {
+# starting colour src.col
+# number of colours
+  colrgb <- col2rgb(src.col)
+  colhsv <- rgb2hsv(colrgb)
+  if (colhsv[1,1] == 0) {
+    sat <- colhsv[2,1]
+  } else {
+    sat <- seq(0.1,colhsv[2,1], length.out=k)
+  }
+
+  val <- seq(0.9,colhsv[3,1], length.out=k)
+  colrgb <- col2rgb(hsv(colhsv[1,1], sat, val))
+  col <- rgb(colrgb[1,],colrgb[2,],colrgb[3,], maxColorValue=255)
+  col
+}
+

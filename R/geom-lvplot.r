@@ -1,4 +1,4 @@
-#' Side-by-side LV boxplots.
+#' Side-by-side LV boxplots with ggplot2.
 #'
 #' An extension of standard boxplots which draws k letter statistics.
 #' Conventional boxplots (Tukey 1977) are useful displays for conveying rough
