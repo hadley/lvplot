@@ -32,16 +32,10 @@ Transportation and is available for download from
 \url{http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time}.
 }
 \examples{
-library(RColorBrewer)
-greys <- rev(brewer.pal(9, "Greys"))
-oranges <- brewer.pal(3, "Oranges")
-colors <- c("white", greys[2:4], oranges[3], greys[4:6], oranges[2],
-   greys[6:8], oranges[1], greys[8:9])
-
 library(ggplot2)
 ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
   geom_lvplot(aes(fill = ..LV..)) +
-  scale_fill_manual(values = colors) +
+  scale_fill_lv() +
   scale_y_sqrt() +
   theme_bw()
 }

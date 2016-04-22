@@ -15,6 +15,7 @@ Depends:
     R (>= 2.14)
 Imports:
     ggplot2 (>= 1.0.1.9003),
-    grid
+    grid,
+    RColorBrewer
 RoxygenNote: 5.0.1
 LazyData: true

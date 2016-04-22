@@ -47,30 +47,28 @@
 #' p <- ggplot(mpg, aes(class, hwy))
 #' p + geom_lvplot(aes(fill=..LV..)) + scale_fill_brewer()
 #' p + geom_lvplot() + geom_jitter(width = 0.2)
-#' p + geom_lvplot(alpha=1, aes(fill=..LV..)) + scale_fill_brewer()
+#' p + geom_lvplot(alpha=1, aes(fill=..LV..)) + scale_fill_lv()
 #'
 #' # Outliers
-#' p + geom_lvplot(varwidth = TRUE, aes(fill=..LV..)) + scale_fill_brewer()
+#' p + geom_lvplot(varwidth = TRUE, aes(fill=..LV..)) + scale_fill_lv()
 #' p + geom_lvplot(fill = "grey80", colour = "black")
 #' p + geom_lvplot(outlier.colour = "red", outlier.shape = 1)
 #'
 #' # Plots are automatically dodged when any aesthetic is a factor
 #' p + geom_lvplot(aes(fill = drv))
 #'
-#' \dontrun{
-#' # just for now: read On_Time data into object ot from lvplot paper
-#' library(RColorBrewer)
-#' cols <- c("white",brewer.pal(9, "Greys"), "Red", "Pink")
-#' reds <- brewer.pal(5, "Reds")[-1]
-#' cols <- c("grey50", cols[2:3], reds[1], cols[4:6], reds[2], cols[7:9], reds[3], cols[10:11])
+#' ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
+#'   geom_lvplot(aes(fill = ..LV..)) +
+#'   scale_fill_lv() +
+#'   scale_y_sqrt() +
+#'   theme_bw()
 #'
-#' ggplot(data=ot) + geom_lvplot(aes(x=UniqueCarrier, y=sqrt(TaxiOut+TaxiIn),
-#'   fill=..LV..), alpha=1) +
-#'   scale_fill_manual(values=cols)
-#' ggplot(data=ot) + geom_lvplot(aes(x=factor(DayOfWeek), y=sqrt(TaxiOut+TaxiIn),
-#'   fill=..LV..), alpha=1) +
-#'   scale_fill_manual(values=cols) + facet_wrap(~UniqueCarrier)
-#' }
+#' ontime$DayOfWeek <- as.POSIXlt(ontime$FlightDate)$wday
+#' ggplot(ontime, aes(factor(DayOfWeek), TaxiIn + TaxiOut)) +
+#'   geom_lvplot(aes(fill = ..LV..)) +
+#'   scale_fill_lv() +
+#'   scale_y_sqrt() +
+#'   theme_bw()
 geom_lvplot <- function(mapping = NULL, data = NULL, stat = "lvplot",
   position = "dodge", outlier.colour = "black", outlier.shape = 19,
   outlier.size = 1.5, outlier.stroke = 0.5, na.rm = TRUE,
@@ -200,3 +198,14 @@ GeomLvplot <- ggplot2::ggproto("GeomLvplot", ggplot2::Geom,
 
   required_aes = c("x", "k", "LV")
 )
+
+#' @export
+#' @rdname geom_lvplot
+scale_fill_lv <- function(...) {
+  greys <- rev(RColorBrewer::brewer.pal(9, "Greys"))
+  oranges <- RColorBrewer::brewer.pal(3, "Oranges")
+  colors <- c("white", greys[2:4], oranges[3], greys[4:6], oranges[2],
+      greys[6:8], oranges[1], greys[8:9])
+
+  ggplot2::scale_fill_manual(..., values = colors)
+}

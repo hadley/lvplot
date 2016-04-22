@@ -5,6 +5,7 @@
 \alias{GeomLvplot}
 \alias{StatLvplot}
 \alias{geom_lvplot}
+\alias{scale_fill_lv}
 \alias{stat_lvplot}
 \title{Side-by-side LV boxplots.}
 \format{An object of class \code{GeomLvplot} (inherits from \code{Geom}, \code{ggproto}) of length 6.}
@@ -15,6 +16,8 @@ geom_lvplot(mapping = NULL, data = NULL, stat = "lvplot",
   varwidth = FALSE, show.legend = NA, inherit.aes = TRUE, ...)
 
 GeomLvplot
+
+scale_fill_lv(...)
 
 stat_lvplot(mapping = NULL, data = NULL, geom = "lvplot",
   position = "dodge", na.rm = TRUE, conf = 0.95, percent = NULL,
@@ -123,30 +126,28 @@ library(ggplot2)
 p <- ggplot(mpg, aes(class, hwy))
 p + geom_lvplot(aes(fill=..LV..)) + scale_fill_brewer()
 p + geom_lvplot() + geom_jitter(width = 0.2)
-p + geom_lvplot(alpha=1, aes(fill=..LV..)) + scale_fill_brewer()
+p + geom_lvplot(alpha=1, aes(fill=..LV..)) + scale_fill_lv()
 
 # Outliers
-p + geom_lvplot(varwidth = TRUE, aes(fill=..LV..)) + scale_fill_brewer()
+p + geom_lvplot(varwidth = TRUE, aes(fill=..LV..)) + scale_fill_lv()
 p + geom_lvplot(fill = "grey80", colour = "black")
 p + geom_lvplot(outlier.colour = "red", outlier.shape = 1)
 
 # Plots are automatically dodged when any aesthetic is a factor
 p + geom_lvplot(aes(fill = drv))
 
-\dontrun{
-# just for now: read On_Time data into object ot from lvplot paper
-library(RColorBrewer)
-cols <- c("white",brewer.pal(9, "Greys"), "Red", "Pink")
-reds <- brewer.pal(5, "Reds")[-1]
-cols <- c("grey50", cols[2:3], reds[1], cols[4:6], reds[2], cols[7:9], reds[3], cols[10:11])
+ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
+  geom_lvplot(aes(fill = ..LV..)) +
+  scale_fill_lv() +
+  scale_y_sqrt() +
+  theme_bw()
 
-ggplot(data=ot) + geom_lvplot(aes(x=UniqueCarrier, y=sqrt(TaxiOut+TaxiIn),
-  fill=..LV..), alpha=1) +
-  scale_fill_manual(values=cols)
-ggplot(data=ot) + geom_lvplot(aes(x=factor(DayOfWeek), y=sqrt(TaxiOut+TaxiIn),
-  fill=..LV..), alpha=1) +
-  scale_fill_manual(values=cols) + facet_wrap(~UniqueCarrier)
-}
+ontime$DayOfWeek <- as.POSIXlt(ontime$FlightDate)$wday
+ggplot(ontime, aes(factor(DayOfWeek), TaxiIn + TaxiOut)) +
+  geom_lvplot(aes(fill = ..LV..)) +
+  scale_fill_lv() +
+  scale_y_sqrt() +
+  theme_bw()
 }
 \references{
 McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of
