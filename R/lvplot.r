@@ -56,7 +56,7 @@ LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
 #'   title(paste("Exponential, n = ", length(x)))
 #'   LVboxplot(x, col = "grey", xlab = "")
 #' }
-#' par(oldpar)
+#' par(mfrow=oldpar$mfrow, mar=oldpar$mar)
 LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", width=0.9, width.method = "linear", median.col="grey10", ...) {
   deparen <- function(expr) {
     while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) ==

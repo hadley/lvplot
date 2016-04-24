@@ -88,6 +88,6 @@ for (i in 1:4) {
   title(paste("Exponential, n = ", length(x)))
   LVboxplot(x, col = "grey", xlab = "")
 }
-par(oldpar)
+par(mfrow=oldpar$mfrow, mar=oldpar$mar)
 }
 
