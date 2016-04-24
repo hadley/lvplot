@@ -43,7 +43,6 @@ outputLVplot <- function(x,qu,k,out,alpha) {
 #' @param width.method one of 'linear', 'height' or 'area'. Methods 'height' and 'area' ensure that these dimension are proportional to the number of observations within each box.
 #' @keywords internal
 drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, width.method = "linear", median.col, ...) {
-#browser()
   i <- seq_len(k)
   y <- rep(y, length(x))
 
@@ -54,16 +53,13 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
     offset <- width/2* c(lower / k, 1, rev(lower) / k)
   } else {
     if (width.method=="area") {
-      #    browser()
       areas <- .5*c(2^(lower-k), rev(2^(lower-k)))
       height <- diff(qu)
-  #    browser()
       # offset is half the width
       offset <- width/2*c(areas[lower]/height[lower], .9*min(1, 1/width),
                           rev(areas[upper-1])/rev(height[upper-1]))
     } else {
       if (width.method=="height") {
-#        browser()
         height <- 2*c(2^(lower-k), rev(2^(lower-k)))
         offset <- width/2*c(height[lower], 1, rev(height[upper-1]))
       } else stop("parameter width.method is not specified. Use 'linear' or 'proportional'")
@@ -77,11 +73,10 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
     # bottom rectangles:
     rect(qu[lower], y[lower] + offset[lower],
          qu[lower+1], y[lower] - offset[lower], col = col, border=border)
-    # top rectangles (lower is correct for the offset - it's not nice looking, though):
+    # top rectangles:
     rect(qu[upper-1], y[upper] + offset[upper],
          qu[upper], y[upper] - offset[upper], col = col, border=border)
 
-#    rect(qu[lower], y[i] + offset, qu[upper], y[i] - offset, col = col)
     # draw the median as a line
     med = length(lower) + 1
     oldpar <- par()
@@ -94,7 +89,7 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
     # bottom rectangles:
     rect(y[lower] + offset[lower], qu[lower],
          y[lower] - offset[lower], qu[lower+1], col = col, border=border)
-    # top rectangles (lower is correct for the offset - it's not nice looking, though):
+    # top rectangles:
     rect(y[upper] + offset[upper], qu[upper-1],
          y[upper] - offset[upper], qu[upper], col = col, border=border)
 

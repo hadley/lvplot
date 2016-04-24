@@ -57,7 +57,7 @@ LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
 #'   LVboxplot(x, col = "grey", xlab = "")
 #' }
 #' par(oldpar)
-LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", median.col="grey10", ...) {
+LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", width=0.9, width.method = "linear", median.col="grey10", ...) {
   deparen <- function(expr) {
     while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) ==
         "(") expr <- expr[[2]]
@@ -135,7 +135,7 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
    qu <- calcLV(xx, k)
    out <- xx < min(qu) | xx > max(qu)
 
-   drawLVplot(xx,i,k,out,qu,horizontal,col=col[(kmax-k) +1:k],median.col=median.col, ...)
+   drawLVplot(xx,i,k,out,qu,horizontal,col=col[(kmax-k) +1:k], width=width, width.method=width.method, median.col=median.col, ...)
    result[[pt]] <- outputLVplot(xx,qu,k,out,alpha)
    pt <- pt+1
   }
@@ -145,7 +145,7 @@ LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=
 #' @param x numeric vector of data
 #' @export
 #' @rdname LVboxplot
-LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", median.col="grey10", ...) {
+LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", width=0.9, width.method = "linear", median.col="grey10", ...) {
   x.name <- as.list(match.call())[-1]$x
   x <- eval(x,  parent.frame())
 
@@ -186,7 +186,7 @@ LVboxplot.numeric <- function(x,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, 
     axis(2)
   }
 
-  drawLVplot(x,pt,k,out,qu,horizontal,col=col,median.col=median.col, ...)
+  drawLVplot(x,pt,k,out,qu,horizontal,col=col,width=width, width.method=width.method, median.col=median.col, ...)
 
   result <- outputLVplot(x,qu,k,out,alpha)
   invisible(result)

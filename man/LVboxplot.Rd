@@ -10,11 +10,13 @@ LVboxplot(x, ...)
 
 \method{LVboxplot}{formula}(formula, alpha = 0.95, k = NULL, perc = NULL,
   horizontal = TRUE, xlab = NULL, ylab = NULL, col = "grey30",
-  bg = "grey90", median.col = "grey10", ...)
+  bg = "grey90", width = 0.9, width.method = "linear",
+  median.col = "grey10", ...)
 
 \method{LVboxplot}{numeric}(x, alpha = 0.95, k = NULL, perc = NULL,
   horizontal = TRUE, xlab = NULL, ylab = NULL, col = "grey30",
-  bg = "grey90", median.col = "grey10", ...)
+  bg = "grey90", width = 0.9, width.method = "linear",
+  median.col = "grey10", ...)
 }
 \arguments{
 \item{x}{numeric vector of data}
@@ -44,6 +46,10 @@ outliers are shown}
 \item{col}{vector of colours to use}
 
 \item{bg}{background colour}
+
+\item{width}{maximum height/width of box}
+
+\item{width.method}{one of 'linear', 'height' or 'area'. Methods 'height' and 'area' ensure that these dimension are proportional to the number of observations within each box.}
 
 \item{median.col}{colour of the line for the median}
 }
