@@ -124,7 +124,8 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       data$xmax <- data$x + data$relvarwidth * data$width / 2
     }
     data$width <- NULL
-    if (!is.null(data$relvarwidth)) data$relvarwidth <- NULL
+# don't delete the relative width for LV plots
+#    if (!is.null(data$relvarwidth)) data$relvarwidth <- NULL
 
     data
   },
@@ -143,8 +144,9 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
     )
 
     i <- seq_len(data$k[1]-1)-1
-    width <- data$xmax - data$xmin
-    offset <- c(0, (i / (2 * data$k[1])))  * width
+    if (varwidth) data$width <- data$relvarwidth
+    else data$width <- data$xmax - data$xmin
+    offset <- c(0, (i / (2 * data$k[1])))  * data$width
     box <- data.frame(
       xmin = data$xmin + offset,
       xmax = data$xmax - offset,
