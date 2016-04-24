@@ -57,8 +57,9 @@
 #' # Plots are automatically dodged when any aesthetic is a factor
 #' p + geom_lv(aes(fill = drv))
 #'
+#' # varwidth adjusts the width of the boxes according to the number of observations
 #' ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
-#'   geom_lv(aes(fill = ..LV..)) +
+#'   geom_lv(aes(fill = ..LV..), width=1.5, varwidth=TRUE) +
 #'   scale_fill_lv() +
 #'   scale_y_sqrt() +
 #'   theme_bw()
@@ -72,7 +73,7 @@
 geom_lv <- function(mapping = NULL, data = NULL, stat = "lv",
   position = "dodge", outlier.colour = "black", outlier.shape = 19,
   outlier.size = 1.5, outlier.stroke = 0.5, na.rm = TRUE,
-  varwidth = FALSE, show.legend = NA, inherit.aes = TRUE, ...)
+  varwidth = FALSE, width.method = "linear", show.legend = NA, inherit.aes = TRUE, ...)
 {
   ggplot2::layer(
     data = data,
@@ -133,6 +134,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
   draw_group = function(data, panel_scales, coord,
                         outlier.colour = "black", outlier.shape = 19,
                         outlier.size = 1.5, outlier.stroke = 0.5,
+                        width.method="linear",
                         varwidth = FALSE) {
     common <- data.frame(
       colour = data$colour,
@@ -142,22 +144,68 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       group = data$group,
       stringsAsFactors = FALSE
     )
-
+# browser()
     i <- seq_len(data$k[1]-1)-1
     if (varwidth) data$width <- data$relvarwidth
     else data$width <- data$xmax - data$xmin
-    offset <- c(0, (i / (2 * data$k[1])))  * data$width
-    box <- data.frame(
-      xmin = data$xmin + offset,
-      xmax = data$xmax - offset,
-      ymin = data$lower,
-      ymax = data$upper,
-      alpha = data$alpha,
-      LV = data$LV,
-      common,
+
+    lower <- rev(seq_len(data$k[1]-1)) +1
+    upper <- seq_len(data$k[1]-1)+1
+
+    if (width.method=="linear") {
+      offset <- c(0, (i / (2 * data$k[1])))  * data$width
+#      offset <- data$width[1]/2* c(i / data$k[1], 1, rev(i) / data$k[1])
+    } else {
+      if (width.method=="area") browser()
+    }
+    # boxes for lower letter values
+    # bottom rectangles:
+    lowbox <- data.frame(
+      xmin = data$xmin[lower] + offset[lower],
+      xmax = data$xmax[lower] - offset[lower],
+      ymin = data$lower[lower-1],
+      ymax = data$lower[lower],
+      alpha = data$alpha[lower],
+      LV = data$LV[lower],
+      common[lower,],
       stringsAsFactors = FALSE
     )
-    box <- box[nrow(box):1,]
+    # top rectangles:
+    hibox <- data.frame(
+      xmin = data$xmin[upper] + offset[upper],
+      xmax = data$xmax[upper] - offset[upper],
+      ymin = data$upper[upper-1],
+      ymax = data$upper[upper],
+      alpha = data$alpha[upper],
+      LV = data$LV[upper],
+      common[upper,],
+      stringsAsFactors = FALSE
+    )
+    # medians, not rectangles:
+    medians <- data.frame(
+      xmin = data$xmin[1] + offset[1],
+      xmax = data$xmax[1] - offset[1],
+      ymin = data$upper[1],
+      ymax = data$upper[1],
+      alpha = data$alpha[1],
+      LV = data$LV[1],
+      common[1,],
+      stringsAsFactors = FALSE
+    )
+#    browser()
+
+#     box <- data.frame(
+#       xmin = data$xmin + offset,
+#       xmax = data$xmax - offset,
+#       ymin = data$lower,
+#       ymax = data$upper,
+#       alpha = data$alpha,
+#       LV = data$LV,
+#       common,
+#       stringsAsFactors = FALSE
+#     )
+#     box <- box[nrow(box):1,]
+    box <- rbind(medians, lowbox, hibox)
 
     medians <- subset(box, LV=="M")
     medians <-   transform(medians,

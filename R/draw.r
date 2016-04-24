@@ -62,7 +62,7 @@ drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, w
       if (width.method=="height") {
         height <- 2*c(2^(lower-k), rev(2^(lower-k)))
         offset <- width/2*c(height[lower], 1, rev(height[upper-1]))
-      } else stop("parameter width.method is not specified. Use 'linear' or 'proportional'")
+      } else stop("parameter width.method is not specified. Use 'linear', 'area', or 'height'")
     }
   }
 

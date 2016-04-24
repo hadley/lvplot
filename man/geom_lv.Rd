@@ -13,7 +13,7 @@
 geom_lv(mapping = NULL, data = NULL, stat = "lv", position = "dodge",
   outlier.colour = "black", outlier.shape = 19, outlier.size = 1.5,
   outlier.stroke = 0.5, na.rm = TRUE, varwidth = FALSE,
-  show.legend = NA, inherit.aes = TRUE, ...)
+  width.method = "linear", show.legend = NA, inherit.aes = TRUE, ...)
 
 GeomLv
 
@@ -136,8 +136,9 @@ p + geom_lv(outlier.colour = "red", outlier.shape = 1)
 # Plots are automatically dodged when any aesthetic is a factor
 p + geom_lv(aes(fill = drv))
 
+# varwidth adjusts the width of the boxes according to the number of observations
 ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
-  geom_lv(aes(fill = ..LV..)) +
+  geom_lv(aes(fill = ..LV..), width=1.5, varwidth=TRUE) +
   scale_fill_lv() +
   scale_y_sqrt() +
   theme_bw()

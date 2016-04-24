@@ -89,5 +89,7 @@ for (i in 1:4) {
   LVboxplot(x, col = "grey", xlab = "")
 }
 par(mfrow=oldpar$mfrow, mar=oldpar$mar)
+
+with(ontime, LVboxplot(sqrt(TaxiIn + TaxiOut) ~ UniqueCarrier, horizontal=FALSE))
 }
 

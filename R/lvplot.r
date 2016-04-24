@@ -57,6 +57,8 @@ LVboxplot <- function(x, ...) UseMethod("LVboxplot",x)
 #'   LVboxplot(x, col = "grey", xlab = "")
 #' }
 #' par(mfrow=oldpar$mfrow, mar=oldpar$mar)
+#'
+#' with(ontime, LVboxplot(sqrt(TaxiIn + TaxiOut) ~ UniqueCarrier, horizontal=FALSE))
 LVboxplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", width=0.9, width.method = "linear", median.col="grey10", ...) {
   deparen <- function(expr) {
     while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) ==
