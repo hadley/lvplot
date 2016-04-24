@@ -4,15 +4,21 @@
 \name{census}
 \alias{census}
 \title{County demographics based on 1980 US Census}
-\format{A data frame with 17 variables
+\format{A data frame with 10 variables
 \itemize{
-\item name
+\item county County name
+\item FIPS county identifier according to the Federal Information Processing Standard (FIPS)
+\item Latitude
+\item Longitude
+\item JanTmp temperatures in January (in ?)
+\item Elevtn Elevation above sea level
+\item totalpop
 }}
 \usage{
 census
 }
 \description{
-data frame based on the 1980 US Census
+County level statistics based on the 1980 US Census.
 }
 \keyword{datasets}
 

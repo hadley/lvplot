@@ -34,7 +34,7 @@ Transportation and is available for download from
 \examples{
 library(ggplot2)
 ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
-  geom_lvplot(aes(fill = ..LV..)) +
+  geom_lv(aes(fill = ..LV..)) +
   scale_fill_lv() +
   scale_y_sqrt() +
   theme_bw()

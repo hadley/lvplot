@@ -27,7 +27,7 @@
 #' @examples
 #' library(ggplot2)
 #' ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
-#'   geom_lvplot(aes(fill = ..LV..)) +
+#'   geom_lv(aes(fill = ..LV..)) +
 #'   scale_fill_lv() +
 #'   scale_y_sqrt() +
 #'   theme_bw()
@@ -35,9 +35,15 @@
 
 #' County demographics based on 1980 US Census
 #'
-#' data frame based on the 1980 US Census
-#' @format A data frame with 17 variables
+#' County level statistics based on the 1980 US Census.
+#' @format A data frame with 10 variables
 #' \itemize{
-#' \item name
+#' \item county County name
+#' \item FIPS county identifier according to the Federal Information Processing Standard (FIPS)
+#' \item Latitude
+#' \item Longitude
+#' \item JanTmp temperatures in January (in ?)
+#' \item Elevtn Elevation above sea level
+#' \item totalpop
 #' }
 "census"
