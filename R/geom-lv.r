@@ -160,7 +160,13 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
         offset <- (1-height)*data$width/2
       } else {
         if (width.method=="area") {
-          cat("not yet implemented\n")
+#          browser()
+          areas <- 2^(-as.numeric(data$LV))
+          lheight <- c(0, -diff(data$lower))
+          uheight <- c(0, diff(data$upper))
+
+          offset <- (1- areas/lheight)*data$width/2
+          offset[is.infinite(offset)] <- data$width[1]/2
         }
       }
     }
@@ -176,6 +182,12 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       common[lower,],
       stringsAsFactors = FALSE
     )
+
+    if (width.method == "area") {
+      offset <- (1-areas/uheight)*data$width/2
+      offset[is.infinite(offset)] <- data$width[1]/2
+    }
+
     # top rectangles:
     hibox <- data.frame(
       xmin = data$xmin[upper] + offset[upper],
@@ -189,8 +201,8 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
     )
     # medians, not rectangles:
     medians <- data.frame(
-      xmin = data$xmin[1] + offset[1],
-      xmax = data$xmax[1] - offset[1],
+      xmin = data$xmin[1],
+      xmax = data$xmax[1],
       ymin = data$upper[1],
       ymax = data$upper[1],
       alpha = data$alpha[1],
@@ -199,7 +211,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       stringsAsFactors = FALSE
     )
     box <- rbind(medians, lowbox, hibox)
-
+#browser()
     medians <- subset(box, LV=="M")
     medians <-   transform(medians,
         colour = fill,
