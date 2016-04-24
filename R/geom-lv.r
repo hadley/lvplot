@@ -90,6 +90,7 @@ geom_lv <- function(mapping = NULL, data = NULL, stat = "lv",
       outlier.size = outlier.size,
       outlier.stroke = outlier.stroke,
       varwidth = varwidth,
+      width.method = width.method,
       ...
     )
   )
@@ -146,17 +147,22 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
     )
 # browser()
     i <- seq_len(data$k[1]-1)-1
-    if (varwidth) data$width <- data$relvarwidth
-    else data$width <- data$xmax - data$xmin
+    data$width <- data$xmax - data$xmin
 
     lower <- rev(seq_len(data$k[1]-1)) +1
     upper <- seq_len(data$k[1]-1)+1
 
     if (width.method=="linear") {
-      offset <- c(0, (i / (2 * data$k[1])))  * data$width
-#      offset <- data$width[1]/2* c(i / data$k[1], 1, rev(i) / data$k[1])
+      offset <- c(0, (i / data$k[1]))  * data$width/2
     } else {
-      if (width.method=="area") browser()
+      if (width.method=="height") {
+        height <- 2^(-c(1, as.numeric(data$LV)[-nrow(data)])+1)
+        offset <- (1-height)*data$width/2
+      } else {
+        if (width.method=="area") {
+          cat("not yet implemented\n")
+        }
+      }
     }
     # boxes for lower letter values
     # bottom rectangles:
@@ -192,19 +198,6 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       common[1,],
       stringsAsFactors = FALSE
     )
-#    browser()
-
-#     box <- data.frame(
-#       xmin = data$xmin + offset,
-#       xmax = data$xmax - offset,
-#       ymin = data$lower,
-#       ymax = data$upper,
-#       alpha = data$alpha,
-#       LV = data$LV,
-#       common,
-#       stringsAsFactors = FALSE
-#     )
-#     box <- box[nrow(box):1,]
     box <- rbind(medians, lowbox, hibox)
 
     medians <- subset(box, LV=="M")
