@@ -68,6 +68,10 @@ a warning.  If \code{TRUE} silently removes missing values.}
 square-roots of the number of observations in the groups (possibly
 weighted, using the \code{weight} aesthetic).}
 
+\item{width.method}{character, one of 'linear' (default), 'area', or 'height'. This parameter
+determines whether the width of the box for letter value LV(i) should be proportional to i (linear), proportional to $2^{-i}$ (height), or  whether
+the area of the box should be proportional to $2^{-i}$ (area).}
+
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.}
@@ -138,7 +142,7 @@ p + geom_lv(aes(fill = drv))
 
 # varwidth adjusts the width of the boxes according to the number of observations
 ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
-  geom_lv(aes(fill = ..LV..), width=1.5, varwidth=TRUE) +
+  geom_lv(aes(fill = ..LV..), varwidth=TRUE) +
   scale_fill_lv() +
   scale_y_sqrt() +
   theme_bw()

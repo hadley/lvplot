@@ -39,6 +39,9 @@
 #'   \code{TRUE}, boxes are drawn with widths proportional to the
 #'   square-roots of the number of observations in the groups (possibly
 #'   weighted, using the \code{weight} aesthetic).
+#' @param width.method character, one of 'linear' (default), 'area', or 'height'. This parameter
+#' determines whether the width of the box for letter value LV(i) should be proportional to i (linear), proportional to $2^{-i}$ (height), or  whether
+#' the area of the box should be proportional to $2^{-i}$ (area).
 #' @export
 #' @references McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of
 #'     box plots. The American Statistician 32, 12-16.
@@ -59,7 +62,7 @@
 #'
 #' # varwidth adjusts the width of the boxes according to the number of observations
 #' ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
-#'   geom_lv(aes(fill = ..LV..), width=1.5, varwidth=TRUE) +
+#'   geom_lv(aes(fill = ..LV..), varwidth=TRUE) +
 #'   scale_fill_lv() +
 #'   scale_y_sqrt() +
 #'   theme_bw()
@@ -145,7 +148,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       group = data$group,
       stringsAsFactors = FALSE
     )
-# browser()
+ browser()
     i <- seq_len(data$k[1]-1)-1
     data$width <- data$xmax - data$xmin
 
