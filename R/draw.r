@@ -42,12 +42,13 @@ outputLVplot <- function(x,qu,k,out,alpha) {
 #' @param width maximum height/width of box
 #' @param width.method one of 'linear', 'height' or 'area'. Methods 'height' and 'area' ensure that these dimension are proportional to the number of observations within each box.
 #' @keywords internal
-drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="black", width=0.9, width.method = "linear", median.col, ...) {
+drawLVplot <- function(x,y,k,out,qu,horizontal,col, border="grey50", width=0.9, width.method = "linear", median.col, ...) {
   i <- seq_len(k)
   y <- rep(y, length(x))
 
   lower <- i[-k]
   upper <- rev(seq_len(k-1) + k)
+  col <- rev(col[i])
 
   if (width.method=="linear") {
     offset <- width/2* c(lower / k, 1, rev(lower) / k)
