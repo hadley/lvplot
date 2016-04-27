@@ -2,7 +2,7 @@
 #'
 #' Data set detailing on-time performance of national US flights in
 #' January 2015. This data is a subset of the data provided by the US Department of
-#' Transportation and is available for download from
+#' Transportation. The full data as well as archived or more recent data is available for download from
 #' \url{http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time}.
 #'
 #' @references \url{http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time}

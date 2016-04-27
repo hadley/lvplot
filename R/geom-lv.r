@@ -148,7 +148,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       group = data$group,
       stringsAsFactors = FALSE
     )
- browser()
+
     i <- seq_len(data$k[1]-1)-1
     data$width <- data$xmax - data$xmin
 
