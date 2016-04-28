@@ -8,7 +8,6 @@
 \itemize{
 \item FlightDate a date variable of the day of the flight
 \item UniqueCarrier factor variable of the carrier (using the two letter abbreviation)
-\item TailNum character variable of the tail number
 \item FlightNum numeric variable of the flight number
 \item CRSDepTime scheduled departure time in hhmm format
 \item DepTime actual departure time in hhmm format
@@ -28,7 +27,7 @@ ontime
 \description{
 Data set detailing on-time performance of national US flights in
 January 2015. This data is a subset of the data provided by the US Department of
-Transportation and is available for download from
+Transportation. The full data as well as archived or more recent data is available for download from
 \url{http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time}.
 }
 \examples{

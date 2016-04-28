@@ -10,7 +10,6 @@
 #' \itemize{
 #' \item FlightDate a date variable of the day of the flight
 #' \item UniqueCarrier factor variable of the carrier (using the two letter abbreviation)
-#' \item TailNum character variable of the tail number
 #' \item FlightNum numeric variable of the flight number
 #' \item CRSDepTime scheduled departure time in hhmm format
 #' \item DepTime actual departure time in hhmm format
