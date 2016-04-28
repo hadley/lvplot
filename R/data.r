@@ -7,21 +7,23 @@
 #'
 #' @references \url{http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time}
 #' @format A data frame consisting of the variables
-#' \itemize{
-#' \item FlightDate a date variable of the day of the flight
-#' \item UniqueCarrier factor variable of the carrier (using the two letter abbreviation)
-#' \item FlightNum numeric variable of the flight number
-#' \item CRSDepTime scheduled departure time in hhmm format
-#' \item DepTime actual departure time in hhmm format
-#' \item CRSArrTime scheduled arrival time in hhmm format
-#' \item ArrTime actual arrival time in hhmm format
-#' \item TaxiOut numeric variable of the taxi out time in minutes
-#' \item TaxiIn numeric variable of the taxi in time in minutes
-#' \item CarrierDelay	Carrier Delay, in Minutes
-#' \item WeatherDelay	Weather Delay, in Minutes
-#' \item NASDelay	National Air System Delay, in Minutes
-#' \item SecurityDelay	Security Delay, in Minutes
-#' \item LateAircraftDelay	Late Aircraft Delay, in Minutes
+#' \describe{
+#' \item{FlightDate}{a date variable of the day of the flight}
+#' \item{UniqueCarrier}{factor variable of the carrier (using the two letter abbreviation)}
+#' \item{FlightNum}{numeric variable of the flight number}
+#' \item{CRSDepTime}{scheduled departure time in hhmm format}
+#' \item{DepTime}{actual departure time in hhmm format}
+#' \item{CRSArrTime}{scheduled arrival time in hhmm format}
+#' \item{ArrTime}{actual arrival time in hhmm format}
+#' \item{TaxiOut}{numeric variable of the taxi out time in minutes}
+#' \item{TaxiIn}{numeric variable of the taxi in time in minutes}
+#' \item{ArrDelay}{Arrival delay, in Minutes}
+#' \item{DepDelay}{Departure delay, in Minutes}
+#' \item{CarrierDelay}{Carrier Delay, in Minutes}
+#' \item{WeatherDelay}{Weather Delay, in Minutes}
+#' \item{NASDelay}{National Air System Delay, in Minutes}
+#' \item{SecurityDelay}{Security Delay, in Minutes}
+#' \item{LateAircraftDelay}{Late Aircraft Delay, in Minutes}
 #' }
 #' @examples
 #' library(ggplot2)
@@ -36,13 +38,13 @@
 #'
 #' County level statistics based on the 1980 US Census.
 #' @format A data frame with 10 variables
-#' \itemize{
-#' \item county County name
-#' \item FIPS county identifier according to the Federal Information Processing Standard (FIPS)
-#' \item Latitude
-#' \item Longitude
-#' \item JanTmp temperatures in January (in ?)
-#' \item Elevtn Elevation above sea level
-#' \item totalpop
+#' \describe{
+#' \item{county}{County name}
+#' \item{FIPS}{FIPS county code}
+#' \item{Latitude,Longitude}{Location}
+#' \item{JanTmp,JulTmp}{Temperatures in January & July}
+#' \item{JanSun,JulSun}{}
+#' \item{Elevtn}{Elevation above sea level}
+#' \item{totalpop}{Population}
 #' }
 "census"

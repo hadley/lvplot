@@ -5,14 +5,14 @@
 \alias{census}
 \title{County demographics based on 1980 US Census}
 \format{A data frame with 10 variables
-\itemize{
-\item county County name
-\item FIPS county identifier according to the Federal Information Processing Standard (FIPS)
-\item Latitude
-\item Longitude
-\item JanTmp temperatures in January (in ?)
-\item Elevtn Elevation above sea level
-\item totalpop
+\describe{
+\item{county}{County name}
+\item{FIPS}{FIPS county code}
+\item{Latitude,Longitude}{Location}
+\item{JanTmp,JulTmp}{Temperatures in January & July}
+\item{JanSun,JulSun}{}
+\item{Elevtn}{Elevation above sea level}
+\item{totalpop}{Population}
 }}
 \usage{
 census
