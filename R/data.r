@@ -17,11 +17,11 @@
 #' \item ArrTime actual arrival time in hhmm format
 #' \item TaxiOut numeric variable of the taxi out time in minutes
 #' \item TaxiIn numeric variable of the taxi in time in minutes
-#' \item  CarrierDelay	Carrier Delay, in Minutes
-#' \item  WeatherDelay	Weather Delay, in Minutes
-#' \item  NASDelay	National Air System Delay, in Minutes
-#' \item  SecurityDelay	Security Delay, in Minutes
-#' \item  LateAircraftDelay	Late Aircraft Delay, in Minutes
+#' \item CarrierDelay	Carrier Delay, in Minutes
+#' \item WeatherDelay	Weather Delay, in Minutes
+#' \item NASDelay	National Air System Delay, in Minutes
+#' \item SecurityDelay	Security Delay, in Minutes
+#' \item LateAircraftDelay	Late Aircraft Delay, in Minutes
 #' }
 #' @examples
 #' library(ggplot2)
