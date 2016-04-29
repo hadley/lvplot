@@ -19,3 +19,4 @@ Suggests:
     depth
 RoxygenNote: 5.0.1
 LazyData: true
+LazyDataCompression: xz
