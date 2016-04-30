@@ -8,9 +8,9 @@
 \describe{
 \item{county}{County name}
 \item{FIPS}{FIPS county code}
-\item{Latitude,Longitude}{Location}
-\item{JanTmp,JulTmp}{Temperatures in January & July}
-\item{JanSun,JulSun}{}
+\item{Latitude,Longitude}{Geographic location of county centers}
+\item{JanTmp,JulTmp}{(normalized) Temperatures in January & July}
+\item{JanSun,JulSun}{(normalized) Sunshine measurment in January & July}
 \item{Elevtn}{Elevation above sea level}
 \item{totalpop}{Population}
 }}
