@@ -1,5 +1,5 @@
 Package: lvplot
-Version: 0.2.0
+Version: 0.2.0.9000
 Title: Letter Value 'Boxplots'
 Description: Implements the letter value 'boxplot' which extends the standard
     'boxplot' to deal with both larger and smaller number of data points
