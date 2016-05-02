@@ -1,8 +1,8 @@
 Package: lvplot
-Version: 0.1.1.9000
-Title: Letter Value Boxplots
-Description: This package implements the letter value boxplot which extends the
-    standard boxplot to deal with both larger and smaller number of data points
+Version: 0.2.0
+Title: Letter Value 'Boxplots'
+Description: Implements the letter value 'boxplot' which extends the standard
+    'boxplot' to deal with both larger and smaller number of data points
     by dynamically selecting the appropriate number of letter values to display.
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
@@ -12,7 +12,7 @@ License: GPL (>= 2)
 Depends:
     R (>= 2.14)
 Imports:
-    ggplot2 (>= 1.0.1.9003),
+    ggplot2 (>= 2.0.0),
     grid,
     RColorBrewer
 Suggests:
