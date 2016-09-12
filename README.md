@@ -10,5 +10,5 @@ You can install lvplot from github with:
 
 ```R
 # install.packages("devtools")
-devtools::install_github("lvplot/hadley")
+devtools::install_github("hadley/lvplot")
 ```
