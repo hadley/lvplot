@@ -169,7 +169,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
           uheight <- c(0, diff(data$upper))
           lwidth <- areas/lheight
           uwidth <- areas/uheight
-          maxwidth <- pmax(max(lwidth[is.finite(lwidth)]), max(uwidth[is.finite(uwidth)]))
+          maxwidth <- max(max(lwidth[is.finite(lwidth)]), max(uwidth[is.finite(uwidth)]))
 
           # offset <- (1- areas/lheight)*data$width/2
           offset <- (1-lwidth/maxwidth)*data$width/2
