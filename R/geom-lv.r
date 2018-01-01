@@ -167,8 +167,11 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
           areas <- 2^(-as.numeric(data$LV))
           lheight <- c(0, -diff(data$lower))
           uheight <- c(0, diff(data$upper))
+          lwidth <- areas/lheight
+          uwidth <- areas/uheight
 
-          offset <- (1- areas/lheight)*data$width/2
+          # offset <- (1- areas/lheight)*data$width/2
+          offset <- (1-lwidth/max(lwidth[is.finite(lwidth)]))*data$width/2
           offset[is.infinite(offset)] <- data$width[1]/2
         }
       }
@@ -187,7 +190,8 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
     )
 
     if (width.method == "area") {
-      offset <- (1-areas/uheight)*data$width/2
+      # offset <- (1-areas/uheight)*data$width/2
+      offset <- (1-uwidth/max(uwidth[is.finite(uwidth)]))*data$width/2
       offset[is.infinite(offset)] <- data$width[1]/2
     }
 
