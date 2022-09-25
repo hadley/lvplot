@@ -72,6 +72,7 @@ StatLv <- ggplot2::ggproto("StatLv", ggplot2::Stat,
     if (any(outliers)) {
       yrange <- range(c(res$letter.val[k,-1], data$y[!outliers]), na.rm = TRUE)
     }
+    df$y <- NA_real_
     df$ymin <- yrange[1]
     df$ymax <- yrange[2]
 
