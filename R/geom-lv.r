@@ -246,7 +246,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
 
   draw_key = ggplot2::draw_key_rect,
 
-  default_aes = ggplot2::aes(weight = 1, colour = "grey70", fill = "grey70", size = 0.5,
+  default_aes = ggplot2::aes(weight = 1, colour = "grey50", fill = "grey80", size = 0.5,
     alpha = 1, shape = 19, linewidth = 0.5, linetype = "solid", outlier.colour = "black",
     outlier.shape = 19, outlier.size = 1.5, outlier.stroke = 0.5),
 
