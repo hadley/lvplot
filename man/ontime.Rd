@@ -37,7 +37,7 @@ Transportation. The full data as well as archived or more recent data is availab
 \examples{
 library(ggplot2)
 ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
-  geom_lv(aes(fill = ..LV..)) +
+  geom_lv(aes(fill = after_stat(LV))) +
   scale_fill_lv() +
   scale_y_sqrt() +
   theme_bw()
