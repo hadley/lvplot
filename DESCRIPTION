@@ -1,6 +1,6 @@
 Package: lvplot
 Title: Letter Value 'Boxplots'
-Version: 0.2.0.9000
+Version: 0.2.1
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
     person("Heike", "Hofmann", , "hofmann@iastate.edu", role = "aut")
