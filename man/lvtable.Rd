@@ -16,4 +16,3 @@ lvtable(x, k, alpha = 0.95)
 \description{
 Compute table of k letter values for vector x
 }
-

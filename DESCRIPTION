@@ -17,6 +17,6 @@ Imports:
     RColorBrewer
 Suggests:
     depth
-RoxygenNote: 5.0.1
+RoxygenNote: 7.2.1
 LazyData: true
 LazyDataCompression: xz

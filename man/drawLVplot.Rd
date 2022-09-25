@@ -4,8 +4,20 @@
 \alias{drawLVplot}
 \title{Draw an LV plot.}
 \usage{
-drawLVplot(x, y, k, out, qu, horizontal, col, border = "grey50",
-  width = 0.9, width.method = "linear", median.col, ...)
+drawLVplot(
+  x,
+  y,
+  k,
+  out,
+  qu,
+  horizontal,
+  col,
+  border = "grey50",
+  width = 0.9,
+  width.method = "linear",
+  median.col,
+  ...
+)
 }
 \arguments{
 \item{x}{x positions}
@@ -32,4 +44,3 @@ drawLVplot(x, y, k, out, qu, horizontal, col, border = "grey50",
 Draw an LV plot.
 }
 \keyword{internal}
-

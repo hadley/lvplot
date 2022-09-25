@@ -4,7 +4,8 @@
 \name{ontime}
 \alias{ontime}
 \title{Ontime Flight Data}
-\format{A data frame consisting of the variables
+\format{
+A data frame consisting of the variables
 \describe{
 \item{FlightDate}{a date variable of the day of the flight}
 \item{UniqueCarrier}{factor variable of the carrier (using the two letter abbreviation)}
@@ -22,7 +23,8 @@
 \item{NASDelay}{National Air System Delay, in Minutes}
 \item{SecurityDelay}{Security Delay, in Minutes}
 \item{LateAircraftDelay}{Late Aircraft Delay, in Minutes}
-}}
+}
+}
 \usage{
 ontime
 }
@@ -44,4 +46,3 @@ ggplot(ontime, aes(UniqueCarrier, TaxiIn + TaxiOut)) +
 \url{http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time}
 }
 \keyword{datasets}
-

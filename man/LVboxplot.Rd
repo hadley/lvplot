@@ -8,15 +8,37 @@
 \usage{
 LVboxplot(x, ...)
 
-\method{LVboxplot}{formula}(formula, alpha = 0.95, k = NULL, perc = NULL,
-  horizontal = TRUE, xlab = NULL, ylab = NULL, col = "grey30",
-  bg = "grey90", width = 0.9, width.method = "linear",
-  median.col = "grey10", ...)
+\method{LVboxplot}{formula}(
+  formula,
+  alpha = 0.95,
+  k = NULL,
+  perc = NULL,
+  horizontal = TRUE,
+  xlab = NULL,
+  ylab = NULL,
+  col = "grey30",
+  bg = "grey90",
+  width = 0.9,
+  width.method = "linear",
+  median.col = "grey10",
+  ...
+)
 
-\method{LVboxplot}{numeric}(x, alpha = 0.95, k = NULL, perc = NULL,
-  horizontal = TRUE, xlab = NULL, ylab = NULL, col = "grey30",
-  bg = "grey90", width = 0.9, width.method = "linear",
-  median.col = "grey10", ...)
+\method{LVboxplot}{numeric}(
+  x,
+  alpha = 0.95,
+  k = NULL,
+  perc = NULL,
+  horizontal = TRUE,
+  xlab = NULL,
+  ylab = NULL,
+  col = "grey30",
+  bg = "grey90",
+  width = 0.9,
+  width.method = "linear",
+  median.col = "grey10",
+  ...
+)
 }
 \arguments{
 \item{x}{numeric vector of data}
@@ -92,4 +114,4 @@ par(mfrow=oldpar$mfrow, mar=oldpar$mar)
 
 with(ontime, LVboxplot(sqrt(TaxiIn + TaxiOut) ~ UniqueCarrier, horizontal=FALSE))
 }
-
+\concept{letter-value boxplots}

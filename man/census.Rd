@@ -4,7 +4,8 @@
 \name{census}
 \alias{census}
 \title{County demographics based on 1980 US Census}
-\format{A data frame with 10 variables
+\format{
+A data frame with 10 variables
 \describe{
 \item{county}{County name}
 \item{FIPS}{FIPS county code}
@@ -13,7 +14,8 @@
 \item{JanSun,JulSun}{(normalized) Sunshine measurment in January & July}
 \item{Elevtn}{Elevation above sea level}
 \item{totalpop}{Population}
-}}
+}
+}
 \usage{
 census
 }
@@ -21,4 +23,3 @@ census
 County level statistics based on the 1980 US Census.
 }
 \keyword{datasets}
-

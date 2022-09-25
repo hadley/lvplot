@@ -24,4 +24,3 @@ Determine depth of letter values needed for n observations.
 \details{
 Supply one of \code{k}, \code{alpha} or \code{perc}.
 }
-
