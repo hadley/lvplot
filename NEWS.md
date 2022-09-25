@@ -1,3 +1,5 @@
+# lvplot (development version)
+
 # lvplot 0.2.1
 
 * Updates for latest version of ggplot2
