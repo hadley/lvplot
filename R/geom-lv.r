@@ -140,7 +140,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
                         outlier.size = 1.5, outlier.stroke = 0.5,
                         width.method="linear",
                         varwidth = FALSE) {
-    common <- tibble::tibble(
+    common <- tibble(
       colour = data$colour,
       size = data$size,
       linewidth = data$linewidth,
@@ -175,7 +175,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
     }
     # boxes for lower letter values
     # bottom rectangles:
-    lowbox <- tibble::tibble(
+    lowbox <- tibble(
       xmin = data$xmin[lower] + offset[lower],
       xmax = data$xmax[lower] - offset[lower],
       ymin = data$lower[lower-1],
@@ -191,7 +191,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
     }
 
     # top rectangles:
-    hibox <- tibble::tibble(
+    hibox <- tibble(
       xmin = data$xmin[upper] + offset[upper],
       xmax = data$xmax[upper] - offset[upper],
       ymin = data$upper[upper-1],
@@ -201,7 +201,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       common[upper,],
     )
     # medians, not rectangles:
-    medians <- tibble::tibble(
+    medians <- tibble(
       xmin = data$xmin[1],
       xmax = data$xmax[1],
       ymin = data$upper[1],
@@ -222,7 +222,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       )
 
     if (!is.null(data$outliers) && length(data$outliers[[1]] >= 1)) {
-      outliers <- tibble::tibble(
+      outliers <- tibble(
         y = data$outliers[[1]],
         x = data$x[[1]],
         colour = outlier.colour %||% data$colour[1],
