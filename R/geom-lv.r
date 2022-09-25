@@ -145,7 +145,7 @@ GeomLv <- ggplot2::ggproto("GeomLv", ggplot2::Geom,
       size = data$size,
       linewidth = data$linewidth,
       linetype = data$linetype,
-      fill = alpha(data$fill, data$alpha),
+      fill = ggplot2::alpha(data$fill, data$alpha),
       group = data$group,
     )
 
