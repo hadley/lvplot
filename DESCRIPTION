@@ -15,7 +15,8 @@ Depends:
 Imports:
     ggplot2 (>= 3.3.0),
     grid,
-    RColorBrewer
+    RColorBrewer,
+    tibble
 Suggests:
     depth
 Encoding: UTF-8
