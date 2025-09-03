@@ -1,3 +1,5 @@
+# lvplot (development version)
+
 # lvplot 0.2.2
 
 * Various R CMD check fixes
