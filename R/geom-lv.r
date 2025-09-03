@@ -22,7 +22,7 @@
 #' governed Tukey's original boxplot.
 #'
 #'
-#' @seealso \code{\link{stat_quantile}} to view quantiles conditioned on a
+#' @seealso \code{\link[ggplot2]{stat_quantile}} to view quantiles conditioned on a
 #'   continuous variable.
 #' @inheritParams ggplot2::geom_point
 #' @param geom,stat Use to override the default connection between
@@ -40,8 +40,8 @@
 #'   square-roots of the number of observations in the groups (possibly
 #'   weighted, using the \code{weight} aesthetic).
 #' @param width.method character, one of 'linear' (default), 'area', or 'height'. This parameter
-#' determines whether the width of the box for letter value LV(i) should be proportional to i (linear), proportional to $2^{-i}$ (height), or  whether
-#' the area of the box should be proportional to $2^{-i}$ (area).
+#' determines whether the width of the box for letter value \code{LV(i)} should be proportional to i (linear), 
+#' proportional to \eqn{2^{-i}} (height), or whether the area of the box should be proportional to \eqn{2^{-i}} (area).
 #' @export
 #' @references McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of
 #'     box plots. The American Statistician 32, 12-16.

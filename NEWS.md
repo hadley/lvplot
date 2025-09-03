@@ -1,5 +1,7 @@
 # lvplot (development version)
 
+* Various R CMD check fixes
+
 # lvplot 0.2.1
 
 * Updates for latest version of ggplot2

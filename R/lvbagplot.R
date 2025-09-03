@@ -10,6 +10,7 @@ determine2dDepth <- function(n,k,alpha,perc) {
 
 LVbagplot <- function(x, ...) UseMethod("LVbagplot",x)
 
+#' @export
 LVbagplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, method="convex", horizontal=TRUE, xlab=NULL, ylab=NULL, col="grey30", bg="grey90", ...) {
     deparen <- function(expr) {
         while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) ==
@@ -37,7 +38,7 @@ LVbagplot.formula <- function(formula,alpha=0.95, k=NULL, perc=NULL, method="con
 	LVbagplot.numeric(x,z, alpha, k, perc, col, method, xlab=x.name, ylab=z.name, ...)
 }
 
-
+#' @export
 LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", method="convex", horizontal=TRUE, xlab=NULL, ylab=NULL, bg="grey95", ...) {
     win <- function(dx, dy) {
         atan2(y = dy, x = dx)
@@ -80,10 +81,7 @@ LVbagplot.numeric <- function(x,y, alpha=0.95, k=NULL, perc=NULL, col="grey30", 
 
 	}
 	if (method=="depth") {
-		dep <- vector(length=nrow(xy))
-		for (i in 1:nrow(xy))
-			dep[i] <- depth::depth(xy[i,],xy)
-		res <- cbind(xy,round(dep*nrow(xy)))
+		stop("No longer supported")
 	}
 	# compute median as average of points with maximal halfspace depth
 		med <- res[which(res[,3]==max(res[,3])),]
