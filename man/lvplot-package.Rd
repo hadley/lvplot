@@ -8,6 +8,14 @@
 \description{
 Implements the letter value 'boxplot' which extends the standard 'boxplot' to deal with both larger and smaller number of data points by dynamically selecting the appropriate number of letter values to display.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/hadley/lvplot}
+  \item Report bugs at \url{https://github.com/hadley/lvplot/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Hadley Wickham \email{hadley@rstudio.com}
 
